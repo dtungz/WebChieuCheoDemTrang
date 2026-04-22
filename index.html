@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trang web Ma Sói (Werewolf) đẳng cấp và chuyên nghiệp.">
+    <title>MaSoi - Đêm Nay Ai Sẽ Bị Loại?</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header class="main-header" id="navbar">
+        <div class="container header-container">
+            <div class="logo-container">
+                <a href="#" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+            </div>
+            <nav class="nav-links">
+                <a href="#story" class="nav-link">Giới thiệu</a>
+                <a href="#characters" class="nav-link">Nhân vật</a>
+                <a href="#howtoplay" class="nav-link">Luật chơi</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section id="hero" class="hero-section">
+            <div class="moon-glow"></div>
+            <div class="smoke-overlay"></div>
+            <div class="container hero-content">
+                <h1 class="hero-title">Chiếu Chèo Đêm Trăng</h1>
+                <p class="hero-subtitle">Trải nghiệm tựa game boardgame ẩn vai mang đậm dấu ấn nghệ thuật Chèo cổ Việt Nam. Nơi cái thiện và cái ác đối đầu dưới ánh trăng mờ ảo.</p>
+                <div class="hero-actions">
+                    <a href="#characters" class="btn btn-primary">Khám phá nhân vật</a>
+                    <a href="#howtoplay" class="btn btn-outline">Cách chơi</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- STORY SECTION -->
+        <section id="story" class="story-section section-padding">
+            <div class="container">
+                <div class="story-grid">
+                    <div class="story-text">
+                        <h2 class="section-title">Về dự án <span class="text-gold">Chiếu Chèo Đêm Trăng</span></h2>
+                        <p><strong>"Chiếu chèo đêm trăng"</strong> là dự án trò chơi nhập vai tương tác, cho phép người chơi hóa thân vào các nhân vật tiêu biểu trong bảy vở chèo nổi tiếng: <em>Quan Âm Thị Kính, Trương Viên, Kim Nham, Chu Mãi Thần, Lưu Bình Dương Lễ, Trinh Nguyên, Từ Thức gặp tiên.</em></p>
+                        <p>Trò chơi là nhịp cầu giúp các bạn trẻ trực tiếp trải nghiệm tính cách nhân vật và thông điệp <em>"cái thiện sẽ chiến thắng cái ác"</em> mà nghệ thuật chèo luôn hướng đến, góp phần bảo tồn di sản văn hóa dân tộc.</p>
+                    </div>
+                    <div class="story-components box-glass">
+                        <h3 class="box-title">Thành phần hộp game</h3>
+                        <ul class="component-list">
+                            <li><span class="highlight">37</span> Lá bài nhân vật <em>(1 Quản trò, 6 Dân làng, 8 Kẻ phá rối, 22 chức năng)</em></li>
+                            <li><span class="highlight">21</span> Thẻ sự kiện <em>(7 Tích cực, 7 Tiêu cực, 7 Trung lập)</em></li>
+                            <li><span class="highlight">2</span> Bộ Flashcard <em>(Làn điệu chèo & Lời thoại)</em></li>
+                            <li><span class="highlight">3</span> Cuốn Sổ tay <em>(Nhân vật, Luật chơi, Quản trò)</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WIKI NHÂN VẬT -->
+        <section id="characters" class="section-padding">
+            <div class="container">
+                <div class="text-center" style="margin-bottom: var(--space-xl);">
+                    <h2 class="section-title">Wiki <span class="text-gold">Nhân Vật</span></h2>
+                    <p>Hệ thống 25 nhân vật chia làm 3 phe phái, với các kỹ năng đặc trưng mang tính chiến thuật cao.</p>
+                </div>
+                
+                <div class="filter-controls">
+                    <button class="filter-btn active" data-filter="all">Tất cả</button>
+                    <button class="filter-btn text-crimson" data-filter="thien">Phe Thiện</button>
+                    <button class="filter-btn" style="color: #a0a0a5;" data-filter="pharoi">Kẻ Phá Rối</button>
+                    <button class="filter-btn text-gold" data-filter="trunglap">Trung Lập</button>
+                </div>
+
+                <div class="character-grid" id="characterGrid">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </section>
+        <section id="howtoplay" class="section-padding"></section>
+    </main>
+
+    <script src="./main.js"></script>
+</body>
+</html>
