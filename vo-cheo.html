@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Giới thiệu các vở chèo cổ trong Chiếu Chèo Đêm Trăng.">
+    <title>Vở Chèo Cổ - Chiếu Chèo Đêm Trăng</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./style.css">
+    
+    <style>
+
+        /* Zigzag layout for plays */
+        .play-card {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-xxl);
+            align-items: center;
+        }
+
+        @media (min-width: 900px) {
+            .play-card {
+                flex-direction: row;
+            }
+            .play-card:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+        }
+
+        .play-content {
+            flex: 1;
+            padding: var(--space-md);
+        }
+
+        .play-title {
+            font-family: var(--font-display);
+            font-size: var(--text-xl);
+            color: var(--clr-gold);
+            margin-bottom: var(--space-sm);
+        }
+
+        .play-desc {
+            color: var(--clr-parchment-dim);
+            line-height: 1.7;
+            margin-bottom: var(--space-md);
+        }
+
+        .play-chars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .char-tag {
+            background: rgba(30, 30, 35, 0.8);
+            border: 1px solid var(--clr-gold-dim);
+            color: var(--clr-parchment);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* Video Placeholder */
+        .video-container {
+            flex: 1;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--clr-border);
+            border-radius: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .video-container:hover {
+            border-color: var(--clr-gold);
+            box-shadow: 0 10px 40px rgba(200, 160, 90, 0.2);
+        }
+
+        .video-overlay {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .video-icon {
+            font-size: 3rem;
+            color: rgba(255,255,255,0.2);
+            margin-bottom: var(--space-xs);
+        }
+
+        .video-text {
+            color: rgba(255,255,255,0.5);
+            font-family: var(--font-display);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Decorative background element for video */
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.02) 10px, rgba(255,255,255,0.02) 20px);
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header" id="navbar">
+        <div class="container header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Trang chủ</a>
+                <a href="nhan-vat.html" class="nav-link">Nhân vật</a>
+                <a href="luat-choi.html" class="nav-link">Luật chơi</a>
+                <a href="so-tay-quan-tro.html" class="nav-link">Sổ tay Quản trò</a>
+                <a href="vo-cheo.html" class="nav-link active">Vở Chèo</a>
+                <a href="flashcard.html" class="nav-link">Flashcard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="hero-title" style="font-size: var(--text-2xl);">7 Vở Chèo <span class="text-gold">Kinh Điển</span></h1>
+                <p class="hero-subtitle" style="font-size: var(--text-md);">Khám phá cốt truyện và nhân vật trong bảy tác phẩm chèo cổ tạo cảm hứng cho trò chơi.</p>
+            </div>
+        </section>
+
+        <!-- 7 PLAYS SECTION -->
+        <section class="section-padding" style="padding-top: 0;">
+            <div class="container">
+                
+                <!-- 1. Quan Âm Thị Kính -->
+                <div class="play-card">
+                    <div class="play-content">
+                        <h2 class="play-title">1. Quan Âm Thị Kính</h2>
+                        <p class="play-desc">Một trong những vở chèo cổ kinh điển nhất của nền sân khấu truyền thống. Vở diễn kể về Thị Kính, người vợ nết na bị vu oan giết chồng (Thiện Sĩ) do hiểu lầm, buộc phải giả trai đi tu lấy tên Kính Tâm. Tại chùa, Kính Tâm tiếp tục chịu nỗi oan "oan Thị Mầu", nuôi con của người khác trong tủi nhục. Với đức tính nhẫn nhục cao thượng, vượt qua mọi khổ ải, cuối cùng Kính Tâm hóa thành Phật Bà Quan Thế Âm.</p>
+                        <div class="play-chars">
+                            <span class="char-tag">Thị Kính</span>
+                            <span class="char-tag">Thiện Sĩ</span>
+                            <span class="char-tag">Thị Mầu</span>
+                        </div>
+                    </div>
+                    <div class="video-container">
+                        <div class="video-overlay">
+                            <div class="video-icon">▶</div>
+                            <div class="video-text">Video đang cập nhật</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Trương Viên -->
+                <div class="play-card">
+                    <div class="play-content">
+                        <h2 class="play-title">2. Trương Viên</h2>
+                        <p class="play-desc">Kể về chàng thư sinh nghèo Trương Viên nên duyên cùng Thị Phương. Bi kịch bắt đầu khi chiến tranh xảy ra, Trương Viên ra trận, bỏ lại mẹ già và vợ trẻ. Trong 18 năm lưu lạc chạy giặc, Thị Phương một lòng thủ tiết, thậm chí dâng thịt cánh tay cứu mẹ khỏi hổ dữ, dâng đôi mắt làm thuốc chữa bệnh cho mẹ chồng. Tác phẩm là bài ca về đạo đức gia đình, biểu tượng cho phẩm chất "tòng phu, hiếu mẫu" cao đẹp của người phụ nữ Việt.</p>
+                        <div class="play-chars">
+                            <span class="char-tag">Trương Viên</span>
+                            <span class="char-tag">Thị Phương</span>
+                            <span class="char-tag">Quỷ Đực</span>
+                            <span class="char-tag">Quỷ Cái</span>
+                        </div>
+                    </div>
+                    <div class="video-container">
+                        <div class="video-overlay">
+                            <div class="video-icon">▶</div>
+                            <div class="video-text">Video đang cập nhật</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Lưu Bình Dương Lễ -->
+                <div class="play-card">
+                    <div class="play-content">
+                        <h2 class="play-title">3. Lưu Bình Dương Lễ</h2>
+                        <p class="play-desc">Nổi tiếng với thông điệp sâu sắc về tình bằng hữu. Dương Lễ đỗ đạt làm quan, còn Lưu Bình sa cơ thất thế. Để giúp bạn có động lực dùi mài kinh sử, Dương Lễ đã dùng "kế khích tướng" hắt hủi bạn, nhưng lại âm thầm nhờ người vợ lẽ là Châu Long thay mình đi nuôi bạn ăn học ròng rã 3 năm. Cuối cùng, Lưu Bình đỗ Trạng nguyên mới nhận ra tấm lòng cao cả của người bạn tri kỷ.</p>
+                        <div class="play-chars">
+                            <span class="char-tag">Lưu Bình</span>
+                            <span class="char-tag">Dương Lễ</span>
+                            <span class="char-tag">Châu Long</span>
+                        </div>
+                    </div>
+                    <div class="video-container">
+                        <div class="video-overlay">
+                            <div class="video-icon">▶</div>
+                            <div class="video-text">Video đang cập nhật</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Chu Mãi Thần -->
+                <div class="play-card">
+                    <div class="play-content">
+                        <h2 class="play-title">4. Chu Mãi Thần</h2>
+                        <p class="play-desc">Câu chuyện đề cao bài học về nhân quả và sự thủy chung. Chu Mãi Thần là nho sinh nghèo nhưng ham học. Vợ là nàng Thiệt Thê vì cảnh nghèo khó, chán nản bỏ chồng theo quan Tuần Ty giàu có. Chu Mãi Thần vẫn kiên trì đèn sách, cuối cùng công thành danh toại. Thiệt Thê bị đánh ghen, cuộc đời trôi nổi, quay về xin nối lại tình xưa nhưng Chu Mãi Thần từ chối vì tình nghĩa đã dứt.</p>
+                        <div class="play-chars">
+                            <span class="char-tag">Chu Mãi Thần</span>
+                            <span class="char-tag">Thiệt Thê</span>
+                            <span class="char-tag">Tuần Ty</span>
+                        </div>
+                    </div>
+                    <div class="video-container">
+                        <div class="video-overlay">
+                            <div class="video-icon">▶</div>
+                            <div class="video-text">Video đang cập nhật</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Kim Nham -->
+                <div class="play-card">
+                    <div class="play-content">
+                        <h2 class="play-title">5. Kim Nham</h2>
+                        <p class="play-desc">Khai thác bi kịch gia đình và thân phận người phụ nữ trong xã hội phong kiến. Kim Nham cưới Xúy Vân rồi lên kinh dùi mài kinh sử. Xúy Vân ở nhà cô đơn, bị Trần Phương dụ dỗ, nảy sinh ý định giả điên để được ly hôn. Sau khi ly hôn, Xúy Vân bị Trần Phương ruồng bỏ, trở nên điên loạn thật sự và cuối cùng nhận lấy cái chết thương tâm giữa sự bẽ bàng và đau khổ.</p>
+                        <div class="play-chars">
+                            <span class="char-tag">Kim Nham</span>
+                            <span class="char-tag">Súy Vân</span>
+                            <span class="char-tag">Trần Phương</span>
+                        </div>
+                    </div>
+                    <div class="video-container">
+                        <div class="video-overlay">
+                            <div class="video-icon">▶</div>
+                            <div class="video-text">Video đang cập nhật</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Trinh Nguyên -->
+                <div class="play-card">
+                    <div class="play-content">
+                        <h2 class="play-title">6. Trinh Nguyên</h2>
+                        <p class="play-desc">Ca ngợi tấm lòng nhân hậu và tiết hạnh của Trinh Nguyên. Cảnh mẹ góa con côi, bà hết lòng nuôi dạy con chồng (Tôn Mạnh) và con đẻ (Tôn Trọng). Khi cả hai anh em bị nghi oan tội giết người, Trinh Nguyên đã có quyết định lay động lòng người: sẵn sàng hy sinh con đẻ để bảo vệ mạng sống cho con riêng của chồng. Sự hy sinh ấy đã được Quan Án sát thanh liêm thấu cảm và minh oan.</p>
+                        <div class="play-chars">
+                            <span class="char-tag">Trinh Nguyên</span>
+                            <span class="char-tag">Tôn Mạnh</span>
+                            <span class="char-tag">Tôn Trọng</span>
+                            <span class="char-tag">Quan Án Sát</span>
+                        </div>
+                    </div>
+                    <div class="video-container">
+                        <div class="video-overlay">
+                            <div class="video-icon">▶</div>
+                            <div class="video-text">Video đang cập nhật</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Từ Thức Gặp Tiên -->
+                <div class="play-card">
+                    <div class="play-content">
+                        <h2 class="play-title">7. Từ Thức Gặp Tiên</h2>
+                        <p class="play-desc">Ca ngợi tình yêu vượt cõi trần - tiên ranh giới âm dương. Tri huyện Từ Thức phóng khoáng từ quan về quê, vô tình cứu tiên nữ Giáng Hương. Cảm kích ân tình, Giáng Hương đưa chàng về cõi tiên kết duyên. Sống hạnh phúc nhưng Từ Thức vẫn nhớ quê hương xin về thăm nhà. Khi về đến cõi trần, cảnh vật đã đổi thay hàng trăm năm, người thân không còn. Chàng tìm đường trở lại cõi tiên nhưng mãi mãi mất tích.</p>
+                        <div class="play-chars">
+                            <span class="char-tag">Từ Thức</span>
+                            <span class="char-tag">Giáng Hương</span>
+                        </div>
+                    </div>
+                    <div class="video-container">
+                        <div class="video-overlay">
+                            <div class="video-icon">▶</div>
+                            <div class="video-text">Video đang cập nhật</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+                <p class="footer-desc">Dự án boardgame bảo tồn và phát huy giá trị nghệ thuật Chèo cổ Việt Nam qua lối
+                    chơi ẩn vai đầy kịch tính.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Liên Kết Nhanh</h4>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="nhan-vat.html">Wiki Nhân Vật</a></li>
+                    <li><a href="luat-choi.html">Luật Chơi</a></li>
+                    <li><a href="so-tay-quan-tro.html">Sổ Tay Quản Trò</a></li>
+                    <li><a href="vo-cheo.html">Vở Chèo</a></li>
+                    <li><a href="flashcard.html">Flashcard</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Kết Nối</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">Facebook</a>
+                    <a href="#" class="social-icon">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2026 Chiếu Chèo Đêm Trăng. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./main.js"></script>
+</body>
+
+</html>

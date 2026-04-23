@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sổ tay quản trò Chiếu Chèo Đêm Trăng.">
+    <title>Sổ Tay Quản Trò - Chiếu Chèo Đêm Trăng</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./style.css">
+    
+    <!-- StPageFlip CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+
+    <style>
+
+        /* Book Container */
+        .book-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: var(--space-xxl);
+        }
+
+        .flip-book {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            display: none; /* Hidden until loaded */
+        }
+
+        /* Page Styling */
+        .page {
+            background-color: #f4ecd8; /* Parchment like */
+            color: #2c251d; /* Dark brown ink */
+            border: 1px solid #d3c4a6;
+            overflow: hidden;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.1);
+            font-family: var(--font-body);
+        }
+
+        .page-content {
+            padding: var(--space-xl);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Page Decorations */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 10px; bottom: 10px;
+            left: 10px; right: 10px;
+            border: 1px solid rgba(44, 37, 29, 0.2);
+            pointer-events: none;
+        }
+
+        /* Cover styling */
+        .page-cover {
+            background-color: #2c251d;
+            color: var(--clr-gold);
+            text-align: center;
+            justify-content: center;
+        }
+        .page-cover::before {
+            border: 2px solid var(--clr-gold);
+        }
+
+        /* Book Controls */
+        .book-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin-top: var(--space-lg);
+            background: rgba(30, 30, 35, 0.6);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 30px;
+            border: 1px solid var(--clr-border);
+        }
+
+        .book-btn {
+            background: transparent;
+            color: var(--clr-gold);
+            border: 1px solid var(--clr-gold);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: var(--clr-gold);
+            color: var(--clr-night);
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(44, 37, 29, 0.6);
+            font-weight: bold;
+        }
+
+        .page-cover .page-number {
+            display: none;
+        }
+
+        /* Typography for Book */
+        .book-title {
+            font-family: var(--font-display);
+            color: #8b1e1e; /* Dark red */
+            margin-bottom: var(--space-md);
+            text-align: center;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #8b1e1e;
+            padding-bottom: 8px;
+        }
+
+        .book-subtitle {
+            font-weight: bold;
+            color: #2c251d;
+            margin-top: var(--space-md);
+            margin-bottom: var(--space-xs);
+            font-size: 1.1rem;
+        }
+
+        .book-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--space-md);
+            font-size: 0.85rem;
+        }
+
+        .book-table th, .book-table td {
+            border: 1px solid rgba(44, 37, 29, 0.3);
+            padding: 6px;
+            text-align: left;
+        }
+
+        .book-table th {
+            background-color: rgba(44, 37, 29, 0.05);
+            font-weight: bold;
+        }
+
+        .book-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: var(--space-sm);
+        }
+
+        .book-note {
+            font-style: italic;
+            background: rgba(139, 30, 30, 0.05);
+            padding: 10px;
+            border-left: 3px solid #8b1e1e;
+            font-size: 0.85rem;
+        }
+
+        .cover-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .cover-subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--clr-parchment);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header" id="navbar">
+        <div class="container header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Trang chủ</a>
+                <a href="nhan-vat.html" class="nav-link">Nhân vật</a>
+                <a href="luat-choi.html" class="nav-link">Luật chơi</a>
+                <a href="so-tay-quan-tro.html" class="nav-link active">Sổ tay Quản trò</a>
+                <a href="vo-cheo.html" class="nav-link">Vở Chèo</a>
+                <a href="flashcard.html" class="nav-link">Flashcard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="hero-title" style="font-size: var(--text-2xl);">Sổ Tay <span class="text-gold">Quản Trò</span></h1>
+                <p class="hero-subtitle" style="font-size: var(--text-md);">Hướng dẫn chi tiết cách tổ chức và điều hành trò chơi dành cho Quản Trò.</p>
+            </div>
+        </section>
+
+        <!-- BOOK SECTION -->
+        <section class="section-padding" style="padding-top: 0;">
+            <div class="container book-container">
+                
+                <div class="flip-book" id="handbook">
+                    
+                    <!-- Cover -->
+                    <div class="page page-cover">
+                        <div class="page-content" style="align-items: center; justify-content: center;">
+                            <h2 class="cover-title">SỔ TAY<br>QUẢN TRÒ</h2>
+                            <p class="cover-subtitle">CHIẾU CHÈO ĐÊM TRĂNG</p>
+                        </div>
+                    </div>
+
+                    <!-- Page 1: Bảng theo dõi & Lưu ý -->
+                    <div class="page">
+                        <div class="page-content">
+                            <h2 class="book-title">Bảng Theo Dõi</h2>
+                            <p class="book-text">Vì số lượng người chơi lớn, nhiều chức năng, Quản trò nên lập bảng để tiện theo dõi tiến độ và các chức năng còn lại.</p>
+                            <table class="book-table">
+                                <tr>
+                                    <th>Tên nhân vật</th>
+                                    <th>Chức năng</th>
+                                    <th>Tình trạng (X: loại)</th>
+                                </tr>
+                                <tr><td>...</td><td>...</td><td>...</td></tr>
+                                <tr><td>...</td><td>...</td><td>...</td></tr>
+                                <tr><td>...</td><td>...</td><td>...</td></tr>
+                            </table>
+                            <h3 class="book-subtitle">Lưu ý tổ chức</h3>
+                            <p class="book-text">Khi chia bài xong, đêm đầu tiên gọi toàn bộ các vai chức năng dậy thực hiện nhiệm vụ và ghi tên vào bảng.</p>
+                            <div class="book-note">
+                                Để đảm bảo thời gian, nếu sáng hôm đó dân làng không biểu quyết được ai, lập tức cho mọi người tiếp tục đi ngủ. Nên sử dụng đồng hồ bấm giờ để kiểm soát thời gian thảo luận.
+                            </div>
+                            <div class="page-number">1</div>
+                        </div>
+                    </div>
+
+                    <!-- Page 2: Gợi ý lời thoại -->
+                    <div class="page">
+                        <div class="page-content">
+                            <h2 class="book-title">Lời Thoại & Cách Gọi</h2>
+                            <h3 class="book-subtitle">Pha Ban Đêm</h3>
+                            <p class="book-note" style="margin-bottom: var(--space-md);">"Chiềng làng chiềng chạ, thượng hạ tây đông, làng ta yên ả, bỗng đâu bão giông. Mời cả làng nhắm mắt ngủ yên, chờ hạ hồi phân giải."</p>
+                            
+                            <h3 class="book-subtitle">Pha Ban Ngày</h3>
+                            <p class="book-text"><strong>Có người bị bắt:</strong> "Trời sáng bảnh mắt, cả làng thức dậy mà xem, đêm qua có cô/cậu…đã bị Kẻ phá rối bắt mất tích!"</p>
+                            <p class="book-text"><strong>Không ai bị bắt:</strong> "Đêm qua sóng yên biển lặng, cả làng ta được bình an!"</p>
+
+                            <h3 class="book-subtitle">Quy Tắc Gọi</h3>
+                            <ul class="book-text" style="padding-left: 20px;">
+                                <li>Luôn gọi Kẻ phá rối đầu tiên mỗi đêm.</li>
+                                <li>Dân làng không có chức năng, không cần gọi.</li>
+                                <li>Dù nhân vật đã bị loại hay hết chức năng, vẫn phải gọi tên hằng đêm để tránh lộ thông tin.</li>
+                            </ul>
+                            <div class="page-number">2</div>
+                        </div>
+                    </div>
+
+                    <!-- Page 3: Chức năng 1-14 -->
+                    <div class="page">
+                        <div class="page-content">
+                            <h2 class="book-title">Lời Thoại Gọi Đêm (1/2)</h2>
+                            <table class="book-table">
+                                <tr><th style="width: 25%">Nhân Vật</th><th>Lời Thoại</th></tr>
+                                <tr><td><strong>Kẻ Phá Rối / Quỷ</strong></td><td>Đêm khuya thanh vắng, lũ Kẻ phá rối mau hiện hình. Đêm nay muốn bắt giam ai?</td></tr>
+                                <tr><td><strong>Thị Kính</strong></td><td>Thị Kính dậy. Đêm nay kẻ này bị bắt, cứu không? Có muốn bắt giam ai không?</td></tr>
+                                <tr><td><strong>Quan Án Sát</strong></td><td>Quan Án sát dậy. Đêm nay muốn xét xử xem ai là Kẻ phá rối?</td></tr>
+                                <tr><td><strong>Trương Viên</strong></td><td>Nếu bị bắt, muốn kéo ai bị bắt cùng?</td></tr>
+                                <tr><td><strong>Thị Phương</strong></td><td>Đêm nay muốn bảo vệ ai?</td></tr>
+                                <tr><td><strong>Thị Mầu</strong></td><td>Đêm nay muốn quyến rũ ai?</td></tr>
+                                <tr><td><strong>Kim Nham</strong></td><td>Có muốn vô hiệu hóa toàn bộ phe Ác không?</td></tr>
+                                <tr><td><strong>Lưu Bình</strong></td><td><em>(Không gọi ban đêm)</em></td></tr>
+                                <tr><td><strong>Châu Long</strong></td><td>Muốn se duyên cho ai? Hai người được chạm đầu mở mắt nhận nhau!</td></tr>
+                                <tr><td><strong>Tuần Ty</strong></td><td><em>(Chỉ gọi đêm đầu nhận diện)</em></td></tr>
+                                <tr><td><strong>Trần Phương</strong></td><td>Muốn vô hiệu hóa kỹ năng ai?</td></tr>
+                            </table>
+                            <div class="page-number">3</div>
+                        </div>
+                    </div>
+
+                    <!-- Page 4: Chức năng 15-22 -->
+                    <div class="page">
+                        <div class="page-content">
+                            <h2 class="book-title">Lời Thoại Gọi Đêm (2/2)</h2>
+                            <table class="book-table">
+                                <tr><th style="width: 25%">Nhân Vật</th><th>Lời Thoại</th></tr>
+                                <tr><td><strong>Chu Mãi Thần</strong></td><td><em>(Đêm đầu: nhận diện. Sau khai mở: soi năng lực ai?)</em></td></tr>
+                                <tr><td><strong>Thiệt Thê</strong></td><td><em>(Chỉ gọi đêm đầu nhận diện)</em></td></tr>
+                                <tr><td><strong>Từ Thức</strong></td><td>Đêm nay có muốn biến mất không?</td></tr>
+                                <tr><td><strong>Giáng Hương</strong></td><td>Muốn biết ai thuộc phe nào?</td></tr>
+                                <tr><td><strong>Thiện Sĩ</strong></td><td>Muốn cấm ai nói chuyện?</td></tr>
+                                <tr><td><strong>Dương Lễ</strong></td><td>Muốn bảo vệ ai?</td></tr>
+                                <tr><td><strong>Trinh Nguyên</strong></td><td><em>(Chỉ gọi đêm đầu nhận diện)</em></td></tr>
+                                <tr><td><strong>Súy Vân</strong></td><td><em>(Chỉ gọi đêm đầu nhận diện)</em></td></tr>
+                                <tr><td><strong>Tôn Mạnh & Trọng</strong></td><td>Hai anh em mau dậy và nhận ra nhau.</td></tr>
+                            </table>
+                            <div class="book-note">
+                                * Quản trò cần giữ thái độ khách quan, giọng điệu bí ẩn và không được để lộ hướng nhìn về phía người có chức năng.
+                            </div>
+                            <div class="page-number">4</div>
+                        </div>
+                    </div>
+
+                    <!-- Back Cover -->
+                    <div class="page page-cover">
+                        <div class="page-content" style="align-items: center; justify-content: center;">
+                            <img src="./docs/3. DÀN SỔ TAY QUẢN TRÒ.pdf" alt="Logo" style="display:none;"> <!-- just reference -->
+                            <h2 class="cover-title" style="font-size: 1.5rem;">CÁI THIỆN SẼ CHIẾN THẮNG<br>CÁI ÁC</h2>
+                            <div style="margin-top: 20px; width: 50px; height: 2px; background: var(--clr-gold);"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="book-controls">
+                    <button class="book-btn" id="btn-prev">❮ Trang Trước</button>
+                    <div class="page-indicator" style="color: var(--clr-parchment);">
+                        Trang <span id="page-current">1</span> / <span id="page-total">6</span>
+                    </div>
+                    <button class="book-btn" id="btn-next">Trang Sau ❯</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+                <p class="footer-desc">Dự án boardgame bảo tồn và phát huy giá trị nghệ thuật Chèo cổ Việt Nam qua lối
+                    chơi ẩn vai đầy kịch tính.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Liên Kết Nhanh</h4>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="nhan-vat.html">Wiki Nhân Vật</a></li>
+                    <li><a href="luat-choi.html">Luật Chơi</a></li>
+                    <li><a href="so-tay-quan-tro.html">Sổ Tay Quản Trò</a></li>
+                    <li><a href="vo-cheo.html">Vở Chèo</a></li>
+                    <li><a href="flashcard.html">Flashcard</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Kết Nối</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">Facebook</a>
+                    <a href="#" class="social-icon">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2026 Chiếu Chèo Đêm Trăng. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./main.js"></script>
+    <script src="./page-flip.js"></script>
+</body>
+
+</html>

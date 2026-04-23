@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Luật chơi Chiếu Chèo Đêm Trăng.">
+    <title>Luật Chơi - Chiếu Chèo Đêm Trăng</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./style.css">
+    <style>
+
+        /* ==========================================================================
+           HOW TO PLAY SECTION (TIMELINE & ACCORDION)
+           ========================================================================== */
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--space-lg) 0;
+        }
+
+        /* Vertical line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 24px;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--clr-gold), transparent);
+        }
+
+        @media (min-width: 768px) {
+            .timeline::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--space-xl);
+            padding-left: 60px;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-item {
+                padding-left: 0;
+                width: 50%;
+            }
+            
+            .timeline-item:nth-child(odd) {
+                float: left;
+                padding-right: 40px;
+                clear: both;
+            }
+            
+            .timeline-item:nth-child(even) {
+                float: right;
+                padding-left: 40px;
+                clear: both;
+            }
+        }
+
+        /* Clearfix for float */
+        .timeline::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            top: 0;
+            left: 8px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--clr-night-surface);
+            border: 2px solid var(--clr-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            z-index: 2;
+        }
+
+        @media (min-width: 768px) {
+            .timeline-icon {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .timeline-content {
+            padding: var(--space-md) var(--space-lg);
+        }
+
+        .timeline-title {
+            color: var(--clr-gold);
+            margin-bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-size: var(--text-lg);
+        }
+
+        .toggle-icon {
+            font-family: monospace;
+            font-size: 1.5rem;
+            color: var(--clr-parchment-dim);
+            transition: transform var(--duration-fast);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--duration-med) var(--ease-dramatic), margin-top var(--duration-med);
+        }
+
+        .timeline-item.active .accordion-content {
+            max-height: 500px;
+            margin-top: var(--space-md);
+        }
+
+        .timeline-item.active .toggle-icon {
+            transform: rotate(45deg);
+            color: var(--clr-gold);
+        }
+
+        .text-parchment { color: var(--clr-parchment); }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+        .event-card {
+            background: rgba(30, 30, 35, 0.4);
+            border: 1px solid var(--clr-border);
+            border-radius: 8px;
+            padding: var(--space-md);
+            text-align: center;
+        }
+        .event-card h4 {
+            margin-bottom: var(--space-sm);
+        }
+        .event-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+        .event-list li {
+            background: rgba(255,255,255,0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--clr-parchment-dim);
+        }
+        .rank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-md);
+        }
+        .rank-box {
+            background: rgba(30, 30, 35, 0.4);
+            border-left: 4px solid var(--clr-gold);
+            padding: var(--space-md);
+        }
+        .rank-title {
+            font-family: var(--font-display);
+            font-size: var(--text-lg);
+            color: var(--clr-gold);
+            margin-bottom: var(--space-xs);
+        }
+        .rank-desc {
+            font-size: 0.85rem;
+            color: var(--clr-parchment-dim);
+            margin-bottom: var(--space-sm);
+        }
+        .rank-chars {
+            font-weight: bold;
+            color: var(--clr-parchment);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header" id="navbar">
+        <div class="container header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Trang chủ</a>
+                <a href="nhan-vat.html" class="nav-link">Nhân vật</a>
+                <a href="luat-choi.html" class="nav-link active">Luật chơi</a>
+                <a href="so-tay-quan-tro.html" class="nav-link">Sổ tay Quản trò</a>
+                <a href="vo-cheo.html" class="nav-link">Vở Chèo</a>
+                <a href="flashcard.html" class="nav-link">Flashcard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="hero-title" style="font-size: var(--text-2xl);">Luật Chơi <span class="text-gold">Cơ Bản</span></h1>
+                <p class="hero-subtitle" style="font-size: var(--text-md);">Trò chơi được chia làm 2 pha: Ngày và Đêm. Phe Dân làng cần tìm ra Kẻ phá rối để bảo vệ sự bình yên.</p>
+            </div>
+        </section>
+
+        <!-- TIMELINE SECTION -->
+        <section class="section-padding" style="padding-top: 0;">
+            <div class="container">
+                <div class="timeline">
+                    <!-- Đêm -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon text-gold">🌙</div>
+                        <div class="timeline-content box-glass">
+                            <h3 class="timeline-title accordion-toggle">Pha Ban Đêm <span class="toggle-icon">+</span></h3>
+                            <div class="accordion-content">
+                                <p><em>"Chiềng làng chiềng chạ, thượng hạ tây đông, làng ta yên ả, bỗng đâu bão giông..."</em></p>
+                                <ul class="component-list">
+                                    <li>Tất cả người chơi nhắm mắt "đi ngủ".</li>
+                                    <li>Quản trò gọi <strong class="text-parchment">Kẻ phá rối</strong> thức dậy chọn mục tiêu bắt cóc.</li>
+                                    <li>Lần lượt các <strong class="text-parchment">vai chức năng</strong> (Thiện/Trung lập/Phá rối) được gọi dậy để thực hiện kỹ năng.</li>
+                                    <li><strong class="text-parchment">Dân làng</strong> (không có kỹ năng) sẽ ngủ suốt đêm.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ngày -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon text-crimson">☀️</div>
+                        <div class="timeline-content box-glass">
+                            <h3 class="timeline-title accordion-toggle">Pha Ban Ngày <span class="toggle-icon">+</span></h3>
+                            <div class="accordion-content">
+                                <p><em>Trời sáng bảnh mắt, cả làng thức dậy mà xem...</em></p>
+                                <ul class="component-list">
+                                    <li>Quản trò công bố người bị bắt cóc đêm qua.</li>
+                                    <li>Bốc thẻ sự kiện ngẫu nhiên và áp dụng hiệu ứng.</li>
+                                    <li>Toàn bộ dân làng cùng nhau thảo luận, suy luận để tìm ra Kẻ phá rối.</li>
+                                    <li>Biểu quyết bắt giam: Người bị tình nghi có 2 phút biện hộ, bắt đầu bằng <em>"Bẩm làng, con xin thưa..."</em>.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Điều kiện kết thúc -->
+                    <div class="timeline-item">
+                        <div class="timeline-icon text-gold">🏆</div>
+                        <div class="timeline-content box-glass">
+                            <h3 class="timeline-title accordion-toggle">Điều Kiện Kết Thúc <span class="toggle-icon">+</span></h3>
+                            <div class="accordion-content">
+                                <p>Trò chơi kết thúc khi xảy ra một trong ba trường hợp:</p>
+                                <ul class="component-list">
+                                    <li><strong class="text-crimson">Phe Thiện thắng:</strong> Khi toàn bộ Kẻ phá rối bị bắt giam.</li>
+                                    <li><strong style="color: #a0a0a5;">Phe Phá Rối thắng:</strong> Khi số lượng Kẻ phá rối bằng phe Thiện.</li>
+                                    <li><strong class="text-gold">Phe Trung Lập thắng:</strong> Khi hoàn thành nhiệm vụ riêng.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHẾ ĐỘ CHƠI -->
+        <section class="section-padding" style="background: rgba(0,0,0,0.2);">
+            <div class="container">
+                <div class="text-center" style="margin-bottom: var(--space-xl);">
+                    <h2 class="section-title">Chế Độ <span class="text-gold">Chơi</span></h2>
+                    <p>Gợi ý số lượng nhân vật phù hợp theo nhóm người tham gia.</p>
+                </div>
+                
+                <div class="grid-3">
+                    <div class="box-glass">
+                        <h3 class="box-title text-center">Nhóm Nhỏ (8-10 người)</h3>
+                        <p class="text-center" style="font-size: 0.9rem; margin-bottom: var(--space-md);">Thời gian: 20-30 phút<br>Tập trung suy luận cơ bản</p>
+                        <ul class="component-list">
+                            <li><strong class="text-crimson">Phe Thiện (6-7):</strong> Quan Âm Thị Kính, Quan Án Sát, Trương Viên, Thị Phương, 2-3 Dân Làng</li>
+                            <li><strong style="color: #a0a0a5;">Phe Phá Rối (2-3):</strong> 2-3 Kẻ Phá Rối (Hoặc Quỷ Đực, Quỷ Cái, Kẻ Phá Rối)</li>
+                        </ul>
+                    </div>
+                    <div class="box-glass">
+                        <h3 class="box-title text-center">Nhóm Vừa (11-15 người)</h3>
+                        <p class="text-center" style="font-size: 0.9rem; margin-bottom: var(--space-md);">Thời gian: 45-75 phút<br>Tư duy đa chiều, quan sát tâm lý</p>
+                        <ul class="component-list">
+                            <li><strong class="text-crimson">Phe Thiện (7-8):</strong> Thị Kính, Án Sát, Trương Viên, Thị Phương, Châu Long, 2-3 Dân Làng</li>
+                            <li><strong style="color: #a0a0a5;">Phe Phá Rối (4-5):</strong> Quỷ Đực, Quỷ Cái, 1-2 Kẻ Phá Rối</li>
+                            <li><strong class="text-gold">Phe Trung Lập (1-2):</strong> Thị Mầu, Thiện Sĩ</li>
+                        </ul>
+                    </div>
+                    <div class="box-glass">
+                        <h3 class="box-title text-center">Nhóm Lớn (16-20 người)</h3>
+                        <p class="text-center" style="font-size: 0.9rem; margin-bottom: var(--space-md);">Thời gian: 90-120 phút<br>Kịch tính, yêu cầu Quản trò tập trung</p>
+                        <ul class="component-list">
+                            <li><strong class="text-crimson">Phe Thiện (6-7+):</strong> Đầy đủ các chức năng phe thiện</li>
+                            <li><strong style="color: #a0a0a5;">Phe Phá Rối (4-5+):</strong> Toàn bộ các chức năng phe phá rối</li>
+                            <li><strong class="text-gold">Phe Trung Lập (2-3+):</strong> Bổ sung thêm Thiệt Thê, Tên Hề</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- THẺ SỰ KIỆN & THỨ HẠNG -->
+        <section class="section-padding">
+            <div class="container">
+                <div class="text-center" style="margin-bottom: var(--space-xl);">
+                    <h2 class="section-title">Hệ Thống <span class="text-gold">Thẻ & Thứ Hạng</span></h2>
+                </div>
+
+                <div class="grid-3" style="margin-bottom: var(--space-xl);">
+                    <div class="event-card" style="border-top: 4px solid var(--clr-gold);">
+                        <h4 class="text-gold">Thẻ Tích Cực (7)</h4>
+                        <ul class="event-list">
+                            <li>Thăm ngục</li><li>Trăng sáng</li><li>Tái hiện</li><li>Diễn chèo</li>
+                            <li>Du xuân</li><li>Đổi vai</li><li>Chia lìa</li>
+                        </ul>
+                    </div>
+                    <div class="event-card" style="border-top: 4px solid var(--clr-crimson);">
+                        <h4 class="text-crimson">Thẻ Tiêu Cực (7)</h4>
+                        <ul class="event-list">
+                            <li>Trăng khuyết</li><li>Ẩn danh</li><li>Câm lặng</li><li>Hàm oan</li>
+                            <li>Trẩy hội</li><li>Chiếu chèo</li><li>Thầy bói</li>
+                        </ul>
+                    </div>
+                    <div class="event-card" style="border-top: 4px solid #a0a0a5;">
+                        <h4 style="color: #a0a0a5;">Thẻ Trung Lập (7)</h4>
+                        <ul class="event-list">
+                            <li>Xưng vai</li><li>Định mệnh</li><li>Say rượu</li><li>Tan hội</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="text-center" style="margin-bottom: var(--space-md);">Thứ Hạng Nhân Vật</h3>
+                <div class="rank-grid">
+                    <div class="rank-box" style="border-color: #ff3366;">
+                        <div class="rank-title">HẠNG S</div>
+                        <div class="rank-desc">Tối thượng - Khả năng thay đổi hoàn toàn cục diện ván chơi.</div>
+                        <div class="rank-chars">Tên Hề, Trương Viên, Châu Long, Giáng Hương, Suý Vân</div>
+                    </div>
+                    <div class="rank-box" style="border-color: #ff9933;">
+                        <div class="rank-title">HẠNG A</div>
+                        <div class="rank-desc">Cân bằng - Tạo ra sự hỗn loạn, biến số bất ngờ trong ván chơi.</div>
+                        <div class="rank-chars">Quan Âm Thị Kính, Thị Phương, Tuần Ty, Thiện Sĩ, Tôn Mạnh</div>
+                    </div>
+                    <div class="rank-box" style="border-color: #33cc33;">
+                        <div class="rank-title">HẠNG B</div>
+                        <div class="rank-desc">Cân bằng - Mạnh về chiến thuật, phụ thuộc vào người chơi.</div>
+                        <div class="rank-chars">Quan Án Sát, Quỷ Đực, Kẻ Phá Rối, Dương Lễ, Tôn Trọng, Thị Màu</div>
+                    </div>
+                    <div class="rank-box" style="border-color: #3399ff;">
+                        <div class="rank-title">HẠNG C</div>
+                        <div class="rank-desc">Phổ thông - Kĩ năng chỉ dùng được một lần hoặc hỗ trợ.</div>
+                        <div class="rank-chars">Quỷ Cái, Trinh Nguyên, Kim Nham, Trần Phương, Dân Làng</div>
+                    </div>
+                    <div class="rank-box" style="border-color: #a0a0a5;">
+                        <div class="rank-title">HẠNG D</div>
+                        <div class="rank-desc">Phụ thuộc - Ít hoặc không có kĩ năng chủ động.</div>
+                        <div class="rank-chars">Lưu Bình, Chu Mãi Thần, Thiệt Thê, Từ Thức, Dân Làng</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+                <p class="footer-desc">Dự án boardgame bảo tồn và phát huy giá trị nghệ thuật Chèo cổ Việt Nam qua lối
+                    chơi ẩn vai đầy kịch tính.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Liên Kết Nhanh</h4>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="nhan-vat.html">Wiki Nhân Vật</a></li>
+                    <li><a href="luat-choi.html">Luật Chơi</a></li>
+                    <li><a href="so-tay-quan-tro.html">Sổ Tay Quản Trò</a></li>
+                    <li><a href="vo-cheo.html">Vở Chèo</a></li>
+                    <li><a href="flashcard.html">Flashcard</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Kết Nối</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">Facebook</a>
+                    <a href="#" class="social-icon">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2026 Chiếu Chèo Đêm Trăng. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./main.js"></script>
+    <script src="./luat-choi.js"></script>
+</body>
+
+</html>

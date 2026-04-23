@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trang web Ma Sói (Werewolf) đẳng cấp và chuyên nghiệp.">
+    <title>Nhân Vật - Chiếu Chèo Đêm Trăng</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./style.css">
+    <style>
+
+        /* ==========================================================================
+           CHARACTERS SECTION (WIKI)
+           ========================================================================== */
+
+        .filter-controls {
+            margin-bottom: var(--space-xl);
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--clr-border);
+            color: var(--clr-parchment-dim);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: 20px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--duration-fast);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: currentColor;
+            color: currentColor;
+        }
+
+        .filter-btn[data-filter="all"].active { color: var(--clr-parchment); border-color: var(--clr-parchment); }
+        .filter-btn[data-filter="thien"].active { color: var(--clr-crimson); border-color: var(--clr-crimson); }
+        .filter-btn[data-filter="pharoi"].active { color: #a0a0a5; border-color: #a0a0a5; }
+        .filter-btn[data-filter="trunglap"].active { color: var(--clr-gold); border-color: var(--clr-gold); }
+
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: var(--space-lg);
+        }
+
+        /* Flip Card Styles */
+        .char-card {
+            background-color: transparent;
+            height: 360px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .char-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform var(--duration-slow) var(--ease-dramatic);
+            transform-style: preserve-3d;
+        }
+
+        .char-card:hover .char-card-inner,
+        .char-card.flipped .char-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .char-card-front, .char-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--clr-border);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Front side */
+        .char-card-front {
+            background: linear-gradient(135deg, var(--clr-wood-light) 0%, var(--clr-wood) 100%);
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .card-pattern {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 10px 10px;
+        }
+
+        .char-card-front h3 {
+            font-family: var(--font-display);
+            font-size: var(--text-3xl);
+            color: var(--clr-gold-dim);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            z-index: 2;
+            opacity: 0.5;
+        }
+
+        /* Back side */
+        .char-card-back {
+            background: var(--clr-night-surface);
+            transform: rotateY(180deg);
+            padding: var(--space-md);
+            align-items: flex-start;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .char-card[data-faction="thien"] .char-card-back { border-top: 4px solid var(--clr-crimson); }
+        .char-card[data-faction="pharoi"] .char-card-back { border-top: 4px solid #5a5a65; }
+        .char-card[data-faction="trunglap"] .char-card-back { border-top: 4px solid var(--clr-gold); }
+
+        .char-name {
+            font-family: var(--font-display);
+            font-size: var(--text-lg);
+            color: var(--clr-parchment);
+            margin-bottom: var(--space-xs);
+            line-height: 1.2;
+        }
+
+        .char-meta {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: var(--space-sm);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .char-faction.thien { color: var(--clr-crimson); }
+        .char-faction.pharoi { color: #a0a0a5; }
+        .char-faction.trunglap { color: var(--clr-gold); }
+
+        .char-rank {
+            background: rgba(255,255,255,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .char-desc {
+            font-size: 0.85rem;
+            color: var(--clr-parchment-dim);
+            margin-bottom: var(--space-sm);
+            flex-grow: 1;
+        }
+
+        .char-skill {
+            font-size: 0.85rem;
+            background: rgba(200, 175, 100, 0.08);
+            padding: var(--space-sm);
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .char-skill strong {
+            color: var(--clr-gold);
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header" id="navbar">
+        <div class="container header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Trang chủ</a>
+                <a href="nhan-vat.html" class="nav-link active">Nhân vật</a>
+                <a href="luat-choi.html" class="nav-link">Luật chơi</a>
+                <a href="so-tay-quan-tro.html" class="nav-link">Sổ tay Quản trò</a>
+                <a href="vo-cheo.html" class="nav-link">Vở Chèo</a>
+                <a href="flashcard.html" class="nav-link">Flashcard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="hero-title" style="font-size: var(--text-2xl);">Wiki <span class="text-gold">Nhân Vật</span></h1>
+                <p class="hero-subtitle" style="font-size: var(--text-md);">Hệ thống 25 nhân vật chia làm 3 phe phái, với các kỹ năng đặc trưng mang tính chiến thuật cao.</p>
+            </div>
+        </section>
+
+        <!-- WIKI NHÂN VẬT -->
+        <section id="characters" class="section-padding" style="padding-top: 0;">
+            <div class="container">
+                <div class="filter-controls">
+                    <button class="filter-btn active" data-filter="all">Tất cả</button>
+                    <button class="filter-btn text-crimson" data-filter="thien">Phe Thiện</button>
+                    <button class="filter-btn" style="color: #a0a0a5;" data-filter="pharoi">Kẻ Phá Rối</button>
+                    <button class="filter-btn text-gold" data-filter="trunglap">Trung Lập</button>
+                </div>
+
+                <div class="character-grid" id="characterGrid">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+                <p class="footer-desc">Dự án boardgame bảo tồn và phát huy giá trị nghệ thuật Chèo cổ Việt Nam qua lối
+                    chơi ẩn vai đầy kịch tính.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Liên Kết Nhanh</h4>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="nhan-vat.html">Wiki Nhân Vật</a></li>
+                    <li><a href="luat-choi.html">Luật Chơi</a></li>
+                    <li><a href="so-tay-quan-tro.html">Sổ Tay Quản Trò</a></li>
+                    <li><a href="vo-cheo.html">Vở Chèo</a></li>
+                    <li><a href="flashcard.html">Flashcard</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Kết Nối</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">Facebook</a>
+                    <a href="#" class="social-icon">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2026 Chiếu Chèo Đêm Trăng. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./main.js"></script>
+    <script src="./nhan-vat.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bộ sưu tập flashcard các làn điệu và câu thoại chèo cổ.">
+    <title>Flashcard Chèo - Chiếu Chèo Đêm Trăng</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./style.css">
+    
+    <style>
+
+        /* Tabs UI */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--clr-parchment-dim);
+            border: 1px solid var(--clr-border);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            border-color: var(--clr-gold-dim);
+            color: var(--clr-parchment);
+        }
+
+        .tab-btn.active {
+            background: var(--clr-gold);
+            color: var(--clr-night);
+            border-color: var(--clr-gold);
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Flashcard Grid */
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xxl);
+        }
+
+        /* Flashcard 3D Flip */
+        .flashcard-wrapper {
+            perspective: 1000px;
+            height: 400px;
+            cursor: pointer;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: var(--clr-night);
+            border: 1px solid var(--clr-border);
+            padding: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .card-inner-border {
+            border: 1px solid rgba(200, 160, 90, 0.3);
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-md);
+            position: relative;
+        }
+
+        /* Front specific */
+        .flashcard-front {
+            background: linear-gradient(135deg, rgba(30,30,35,1), rgba(20,20,24,1));
+        }
+        
+        .flashcard-front .quote {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--clr-parchment);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .flip-hint {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.8rem;
+            color: var(--clr-gold-dim);
+            opacity: 0.7;
+        }
+
+        /* Back specific */
+        .flashcard-back {
+            background: linear-gradient(135deg, rgba(200,160,90,0.1), rgba(20,20,24,1));
+            transform: rotateY(180deg);
+            border-color: var(--clr-gold-dim);
+        }
+
+        .flashcard-back .answer-content {
+            font-size: 0.95rem;
+            color: var(--clr-parchment-dim);
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .flashcard-wrapper:hover .flashcard:not(.flipped) {
+            transform: rotateY(10deg);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header" id="navbar">
+        <div class="container header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">Trang chủ</a>
+                <a href="nhan-vat.html" class="nav-link">Nhân vật</a>
+                <a href="luat-choi.html" class="nav-link">Luật chơi</a>
+                <a href="so-tay-quan-tro.html" class="nav-link">Sổ tay Quản trò</a>
+                <a href="vo-cheo.html" class="nav-link">Vở Chèo</a>
+                <a href="flashcard.html" class="nav-link active">Flashcard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="hero-title" style="font-size: var(--text-2xl);">Flashcard <span class="text-gold">Nghệ Thuật</span></h1>
+                <p class="hero-subtitle" style="font-size: var(--text-md);">Hỗ trợ người chơi thực hiện thử thách khi gặp các thẻ sự kiện. Lật thẻ để tìm hiểu nguồn gốc.</p>
+            </div>
+        </section>
+
+        <!-- FLASHCARD TABS -->
+        <section class="section-padding" style="padding-top: 0;">
+            <div class="container">
+                
+                <div class="tabs-container">
+                    <button class="tab-btn active" data-tab="lan-dieu">Làn Điệu Chèo</button>
+                    <button class="tab-btn" data-tab="cau-thoai">Câu Thoại Chèo</button>
+                </div>
+
+                <div id="lan-dieu" class="tab-content active">
+                    <div class="flashcard-grid" id="lan-dieu-grid">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <div id="cau-thoai" class="tab-content">
+                    <div class="flashcard-grid" id="cau-thoai-grid">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <a href="index.html" class="logo-text">CHIẾU CHÈO<br><span class="highlight">ĐÊM TRĂNG</span></a>
+                <p class="footer-desc">Dự án boardgame bảo tồn và phát huy giá trị nghệ thuật Chèo cổ Việt Nam qua lối
+                    chơi ẩn vai đầy kịch tính.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Liên Kết Nhanh</h4>
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li><a href="nhan-vat.html">Wiki Nhân Vật</a></li>
+                    <li><a href="luat-choi.html">Luật Chơi</a></li>
+                    <li><a href="so-tay-quan-tro.html">Sổ Tay Quản Trò</a></li>
+                    <li><a href="vo-cheo.html">Vở Chèo</a></li>
+                    <li><a href="flashcard.html">Flashcard</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Kết Nối</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-icon">Facebook</a>
+                    <a href="#" class="social-icon">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom text-center">
+            <p>&copy; 2026 Chiếu Chèo Đêm Trăng. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./main.js"></script>
+    <script src="./flashcard.js"></script>
+</body>
+
+</html>
