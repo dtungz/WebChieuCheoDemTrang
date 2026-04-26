@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 37 30% 85%;
+    --card: 0 0% 7%;
+    --card-foreground: 37 30% 85%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 37 30% 85%;
+    --primary: 43 76% 52%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 97% 15%;
+    --secondary-foreground: 37 30% 85%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 37 15% 55%;
+    --accent: 0 97% 15%;
+    --accent-foreground: 43 76% 52%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 30% 18%;
+    --input: 0 30% 18%;
+    --ring: 43 76% 52%;
+    --chart-1: 43 76% 52%;
+    --chart-2: 0 97% 15%;
+    --chart-3: 37 30% 85%;
+    --chart-4: 0 0% 45%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 37 30% 85%;
+    --sidebar-primary: 43 76% 52%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 97% 15%;
+    --sidebar-accent-foreground: 37 30% 85%;
+    --sidebar-border: 0 30% 18%;
+    --sidebar-ring: 43 76% 52%;
+
+    --font-playfair: 'Playfair Display', serif;
+    --font-montserrat: 'Montserrat', sans-serif;
+  }
+
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 37 30% 85%;
+    --card: 0 0% 7%;
+    --card-foreground: 37 30% 85%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 37 30% 85%;
+    --primary: 43 76% 52%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 97% 15%;
+    --secondary-foreground: 37 30% 85%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 37 15% 55%;
+    --accent: 0 97% 15%;
+    --accent-foreground: 43 76% 52%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 30% 18%;
+    --input: 0 30% 18%;
+    --ring: 43 76% 52%;
+    --chart-1: 43 76% 52%;
+    --chart-2: 0 97% 15%;
+    --chart-3: 37 30% 85%;
+    --chart-4: 0 0% 45%;
+    --chart-5: 27 87% 67%;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 37 30% 85%;
+    --sidebar-primary: 43 76% 52%;
+    --sidebar-primary-foreground: 0 0% 4%;
+    --sidebar-accent: 0 97% 15%;
+    --sidebar-accent-foreground: 37 30% 85%;
+    --sidebar-border: 0 30% 18%;
+    --sidebar-ring: 43 76% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: #4A0404;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}

@@ -3,50 +3,40 @@
    ========================================================================== */
 
 :root {
-    /* 1. COLOR TOKENS (OKLCH for better perceptual uniformity) */
+    /* 1. COLOR TOKENS (HSL mapped from TestWeb Tailwind config) */
 
     /* Vibe ma mị, bí ẩn (đêm tối) */
-    --clr-night: oklch(0.12 0.02 280);
+    --clr-night: hsl(0, 0%, 4%); /* --background */
     /* Đêm tối — nền chính */
-    --clr-night-surface: oklch(0.16 0.02 275);
+    --clr-night-surface: hsl(0, 0%, 7%); /* --card */
     /* Mặt nổi trên nền đêm */
-    --clr-ink: oklch(0.08 0.01 280);
-    /* Đen mực — sâu nhất */
+    --clr-ink: hsl(0, 0%, 0%);
 
     /* Đậm nét dân gian, mộc mạc (nâu gỗ) */
-    --clr-wood: oklch(0.30 0.04 55);
-    /* Nâu gỗ sẫm */
-    --clr-wood-light: oklch(0.45 0.05 60);
-    /* Nâu gỗ nhạt */
+    --clr-wood: hsl(0, 30%, 18%); /* --border */
+    --clr-wood-light: hsl(0, 30%, 25%);
 
     /* Điểm nhấn vương giả, ánh trăng (vàng đồng) */
-    --clr-gold: oklch(0.78 0.14 85);
-    /* Vàng đồng — ánh trăng */
-    --clr-gold-dim: oklch(0.60 0.10 80);
-    /* Vàng mờ */
+    --clr-gold: hsl(43, 76%, 52%); /* --primary */
+    --clr-gold-dim: hsl(43, 76%, 40%);
 
     /* Điểm nhấn drama, rèm sân khấu (đỏ bã trầu) */
-    --clr-crimson: oklch(0.42 0.16 20);
-    /* Đỏ bã trầu */
-    --clr-crimson-deep: oklch(0.30 0.14 18);
-    /* Đỏ thẫm */
+    --clr-crimson: hsl(0, 97%, 15%); /* --secondary */
+    --clr-crimson-deep: hsl(0, 97%, 10%);
 
     /* Text colors (Màu giấy dó) */
-    --clr-parchment: oklch(0.92 0.02 80);
-    /* Giấy dó — text sáng */
-    --clr-parchment-dim: oklch(0.72 0.02 75);
-    /* Text phụ */
+    --clr-parchment: hsl(37, 30%, 85%); /* --foreground */
+    --clr-parchment-dim: hsl(37, 15%, 55%); /* --muted-foreground */
 
     /* Utility colors */
-    --clr-border: oklch(0.25 0.03 275);
-    /* Border subtle */
+    --clr-border: hsl(0, 30%, 18%); /* --border */
 
     /* 2. TYPOGRAPHY TOKENS */
-    --font-display: 'Cinzel Decorative', serif;
+    --font-display: 'Playfair Display', serif;
     /* Tiêu đề — cổ kính, trang trọng */
-    --font-heading: 'Cinzel', serif;
+    --font-heading: 'Playfair Display', serif;
     /* Heading phụ */
-    --font-body: 'Noto Serif', serif;
+    --font-body: 'Montserrat', sans-serif;
     /* Body — thanh lịch, đọc tốt tiếng Việt */
 
     /* Fluid Type Scale (clamp) */
@@ -94,6 +84,21 @@ body {
     /* Nền đêm tối hơi gradient nhẹ để có chiều sâu */
     background-image: radial-gradient(circle at top center, var(--clr-night-surface) 0%, var(--clr-night) 100%);
     min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--clr-night);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--clr-crimson);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--clr-gold);
 }
 
 h1,
