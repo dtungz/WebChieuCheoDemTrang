@@ -20,7 +20,7 @@ export default function EpilogueSection({ drumImage }) {
           <SectionDivider />
           
           <div className="mt-10 relative">
-            <img src={drumImage} alt="Vietnamese ceremonial drum and fan" className="w-48 md:w-64 mx-auto mb-10 opacity-40" />
+            <img src="/scale.png" alt="Scale" className="w-48 md:w-64 mx-auto mb-10 opacity-40" />
             
             <p className="font-playfair text-lg md:text-xl italic text-foreground/80 leading-relaxed">
               Khi những lá bài cuối cùng được lật mở và chân tướng được soi tỏ, cũng là lúc hành trình hóa thân 
