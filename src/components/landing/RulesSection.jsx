@@ -116,7 +116,7 @@ export default function RulesSection({ drumImage }) {
             </button>
           </div>
 
-          <div className="w-full max-w-5xl mx-auto rounded-lg overflow-hidden border border-border/50 bg-card/20 backdrop-blur-sm" style={{ height: '500px' }}>
+          <div className="w-full max-w-5xl mx-auto rounded-lg overflow-hidden border border-border/50 bg-card/20 backdrop-blur-sm" style={{ height: '650px' }}>
             <iframe
               src={`/flipbook-sotay.html?book=${activeBook}`}
               className="w-full h-full border-none"
