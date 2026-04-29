@@ -30,7 +30,7 @@ export default function TheatreSection({ bgImage }) {
           className="text-center mb-16"
         >
           <p className="font-montserrat text-xs tracking-[0.4em] text-primary/70 uppercase mb-4">Mini Theatre</p>
-          <h2 className="font-playfair text-4xl md:text-6xl font-bold text-foreground mb-4">Nhà Hát Vở Chèo</h2>
+          <h2 className="font-playfair text-4xl md:text-6xl font-bold text-foreground mb-4">Thư viện các vở chèo kinh điển</h2>
           <SectionDivider />
           <p className="font-montserrat text-sm text-muted-foreground mt-6 max-w-xl mx-auto">
             Bảy vở chèo cổ kinh điển — cảm hứng cho 25 nhân vật trong trò chơi.
