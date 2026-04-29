@@ -26,7 +26,7 @@ const CHARACTERS = [
   { name: 'Dương Lễ', rank: 'C', faction: 'Phe Thiện', power: 5, deception: 3, virtue: 7 },
   { name: 'Trinh Nguyên', rank: 'C', faction: 'Phe Thiện', power: 3, deception: 2, virtue: 8 },
   { name: 'Dân Làng', rank: 'C', faction: 'Phe Thiện', power: 2, deception: 2, virtue: 6 },
-  { name: 'Súy Vân', rank: 'D', faction: 'Trung Lập', power: 3, deception: 6, virtue: 4 },
+  { name: 'Xúy Vân', rank: 'D', faction: 'Trung Lập', power: 3, deception: 6, virtue: 4 },
   { name: 'Tôn Mạnh', rank: 'D', faction: 'Phe Thiện', power: 3, deception: 2, virtue: 5 },
   { name: 'Tôn Trọng', rank: 'D', faction: 'Phe Thiện', power: 3, deception: 2, virtue: 5 },
 ];

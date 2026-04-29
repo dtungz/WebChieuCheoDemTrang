@@ -73,7 +73,7 @@ const CHAR_LORE = {
     faction: 'Phe Thiện',
     desc: 'Nho sinh nghèo, ngụ học ở Kinh đô, được gả con gái viên huyện là Xúy Vân. Sau khi cưới vợ lại lên kinh đô theo đuổi công danh, nguyên nhân trực tiếp dẫn đến bi kịch của Xúy Vân.',
   },
-  'Súy Vân': {
+  'Xúy Vân': {
     play: 'Kim Nham',
     faction: 'Trung Lập',
     desc: 'Con gái viên huyện, bị ép gả cho Kim Nham không tình yêu. Cô đơn kéo dài, bị Trần Phương lừa phỉnh, giả dại đòi ly hôn. Bị phản bội, hóa điên thật, cuối cùng gieo mình xuống sông tự vẫn.',
@@ -114,12 +114,12 @@ const CHAR_LORE = {
     desc: 'Tiên nữ sống ở chốn bồng lai, sơ ý làm gãy cành hoa mẫu đơn quý, được Từ Thức cứu chuộc rồi kết duyên. Đau đớn tiễn chồng về trần gian, sau đó sống cô độc giữa cõi tiên — biểu tượng tình yêu thủy chung và bi kịch.',
   },
   'Dân Làng': {
-    // play: '___',
+    play: '___',
     faction: 'Phe Thiện',
     desc: 'Những con người lam lũ nhưng giàu tình nghĩa — linh hồn của gánh hát, người giữ cho làng chèo không rơi vào hỗn loạn. Phải tỉnh táo phân biệt đâu là người cùng phường hát, đâu là kẻ che giấu âm mưu.',
   },
   'Kẻ Phá Rối': {
-    // play: '___',
+    play: '___',
     faction: 'Phe Phá Rối',
     desc: 'Không phải quỷ, cũng chẳng phải người. Sống bằng sự mập mờ, gieo lời đồn, bóp méo câu hát. Giả vờ say mê nghệ thuật nhưng thực chất muốn sân đình rối ren, đêm đêm bắt cóc dân làng vào ngục.',
   },
@@ -152,7 +152,7 @@ const CHAR_PAGE = {
   'Thị Mầu': 23,
   'Thiệt Thê': 24,
   'Thiện Sĩ': 25,
-  'Súy Vân': 26,
+  'Xúy Vân': 26,
 };
 
 const CARD_IMAGE_BY_PAGE = {
@@ -180,14 +180,31 @@ const CARD_IMAGE_BY_PAGE = {
   23: '/cards/ThiMau-back.png',
   24: '/cards/ThietThe-back.png',
   25: '/cards/ThienSi-back.png',
-  26: '/cards/SuyVan-back.png',
+  26: '/cards/XuyVan-back.png',
 };
 
 export default function CharacterCard({ character, index }) {
   const [flipped, setFlipped] = useState(false);
-  const page = CHAR_PAGE[character.name] || 2;
+
+  const getCharacterPage = (name) => {
+    if (!name) return 2;
+    const nfc = name.normalize('NFC');
+    const nfd = name.normalize('NFD');
+    if (nfc.includes('Vân') || nfd.includes('Vân')) return 26;
+    return CHAR_PAGE[nfc] || CHAR_PAGE[nfd] || CHAR_PAGE[name] || 2;
+  };
+
+  const getCharacterLore = (name) => {
+    if (!name) return null;
+    const nfc = name.normalize('NFC');
+    const nfd = name.normalize('NFD');
+    if (nfc.includes('Vân') || nfd.includes('Vân')) return CHAR_LORE['Xúy Vân'];
+    return CHAR_LORE[nfc] || CHAR_LORE[nfd] || CHAR_LORE[name];
+  };
+
+  const page = getCharacterPage(character.name);
   const cardImage = CARD_IMAGE_BY_PAGE[page] || '/cards/TenHe-back.png';
-  const lore = CHAR_LORE[character.name];
+  const lore = getCharacterLore(character.name);
 
   return (
     <motion.div

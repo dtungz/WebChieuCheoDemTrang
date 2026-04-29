@@ -6,7 +6,7 @@ import SectionDivider from './SectionDivider';
 const PLAYS = [
   { name: 'Quan Âm Thị Kính', desc: 'Bi kịch của Thị Kính — oan khuất chồng chất, lòng nhân từ bất diệt', videoQuery: 'https://www.youtube.com/watch?v=ZxVY5duWmbg' },
   { name: 'Trương Viên', desc: 'Chuyện tình bi tráng giữa chiến tranh, lòng trung trinh của Thị Phương', videoQuery: 'https://www.youtube.com/watch?v=msJjQQILUFU' },
-  { name: 'Kim Nham', desc: 'Bi kịch Súy Vân giả dại — khi tình yêu bị phản bội, đẩy con người vào bước đường cùng', videoQuery: 'https://www.youtube.com/watch?v=urH2Utyheqo' },
+  { name: 'Kim Nham', desc: 'Bi kịch Xúy Vân giả dại — khi tình yêu bị phản bội, đẩy con người vào bước đường cùng', videoQuery: 'https://www.youtube.com/watch?v=urH2Utyheqo' },
   { name: 'Chu Mãi Thần', desc: 'Câu chuyện về lòng kiên trì và sự bạc bẽo của thế thái nhân tình', videoQuery: 'https://www.youtube.com/watch?v=Kn22EDG7iWY' },
   { name: 'Lưu Bình Dương Lễ', desc: 'Tình bạn tri kỷ vượt qua gian khổ, hy sinh thầm lặng của Châu Long', videoQuery: 'https://www.youtube.com/watch?v=ohOz5PDTW7I' },
   { name: 'Từ Thức Gặp Tiên', desc: 'Chốn bồng lai tiên cảnh — khi con người chạm đến giấc mơ ngàn đời', videoQuery: 'https://www.youtube.com/watch?v=IiNc-222rDQ' },
