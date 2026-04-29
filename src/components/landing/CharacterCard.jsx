@@ -1,95 +1,193 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const rankDescriptions = {
-  S: 'Tối Thượng',
-  A: 'Cân Bằng',
-  B: 'Phổ Thông',
-  C: 'Hỗ Trợ',
-  D: 'Phụ Thuộc',
+// Character lore data extracted from the character handbook PDF
+const CHAR_LORE = {
+  'Quan Âm Thị Kính': {
+    play: 'Quan Âm Thị Kính',
+    faction: 'Phe Thiện',
+    desc: 'Người phụ nữ hiền thục, nết na nhưng phải chịu oan khuất trong xã hội phong kiến. Bị vu tội giết chồng, nàng giả trai đi tu, nuôi con Thị Mầu trong tủi nhục. Đến khi viên tịch, tấm lòng nhân hậu của nàng hóa thành Phật Bà Quan Âm.',
+  },
+  'Thiện Sĩ': {
+    play: 'Quan Âm Thị Kính',
+    faction: 'Trung Lập',
+    desc: 'Đại diện trí thức phong kiến nhưng bạc nhược, thiếu quyết đoán. Sự nhu nhược và thiếu lòng tin khiến ông không bảo vệ được vợ trước vu oan của mẹ đẻ, trở thành nguyên cớ bi kịch của Thị Kính.',
+  },
+  'Thị Mầu': {
+    play: 'Quan Âm Thị Kính',
+    faction: 'Trung Lập',
+    desc: 'Con gái phú ông với tính cách lẳng lơ, phóng khoáng, táo bạo. Chủ động tán tỉnh chú tiểu Kính Tâm và đổ oan cái thai trong bụng mình cho tiểu. Phản ánh khát khao yêu đương tự do đi ngược chuẩn mực phong kiến.',
+  },
+  'Trương Viên': {
+    play: 'Trương Viên',
+    faction: 'Phe Thiện',
+    desc: 'Hội tụ đức tính "trung, hiếu, tiết, nghĩa". Thư sinh văn võ song toàn, chấp nhận rời gia đình 18 năm chinh chiến. Dù công thành danh toại vẫn khước từ vinh hoa để quay về tìm vợ và mẹ già.',
+  },
+  'Thị Phương': {
+    play: 'Trương Viên',
+    faction: 'Phe Thiện',
+    desc: 'Người vợ hiền, dâu thảo, thủy chung son sắt. Khi chồng ra trận, một mình phụng dưỡng mẹ già, thậm chí dâng đôi mắt cầu thần cứu mẹ. Sự hi sinh cảm động trời đất, giúp nàng được đoàn viên, mắt sáng trở lại.',
+  },
+  'Quỷ Đực': {
+    play: 'Trương Viên',
+    faction: 'Phe Phá Rối',
+    desc: 'Vai bạo tà bước ra từ bóng tối sân đình. Gương mặt xanh lạnh, đôi sừng cong vươn ngược, mái tóc rối bời. Kiểu cái ác thô ráp, cậy sức, chỉ chờ đêm buông để lộ mặt thật.',
+  },
+  'Quỷ Cái': {
+    play: 'Trương Viên',
+    faction: 'Phe Phá Rối',
+    desc: 'Vai đào yêu bước ra từ ánh đèn sân đình. Gương mặt trắng xanh, dáng vẻ lặng lẽ mềm mại. Ẩn sau vẻ dịu dàng là bóng tối khó nắm bắt — cái ác không ồn ào nhưng đủ sức làm lòng người chệch hướng.',
+  },
+  'Lưu Bình': {
+    play: 'Lưu Bình Dương Lễ',
+    faction: 'Phe Thiện',
+    desc: 'Người có tài, trọng nghĩa nhưng lúc đầu bi quan khi thi cử thất bại. Sau khi bị Dương Lễ hắt hủi và được Châu Long chăm lo, thức tỉnh, chuyên tâm đèn sách, trở thành Trạng nguyên.',
+  },
+  'Dương Lễ': {
+    play: 'Lưu Bình Dương Lễ',
+    faction: 'Phe Thiện',
+    desc: 'Người thông minh, đỗ Trạng nguyên, làm quan. Bên ngoài lạnh lùng khinh bạn, nhưng thực chất dùng "khích tướng" để bạn vượt qua sa cơ. Mẫu người quân tử coi trọng tình bằng hữu.',
+  },
+  'Châu Long': {
+    play: 'Lưu Bình Dương Lễ',
+    faction: 'Phe Thiện',
+    desc: 'Vợ ba của Dương Lễ, được chồng nhờ nuôi Lưu Bình ăn học. Người phụ nữ đức hạnh, thủy chung, giàu đức hi sinh, ba năm chăm sóc bạn chồng mà vẫn giữ trọn phẩm hạnh.',
+  },
+  'Chu Mãi Thần': {
+    play: 'Chu Mãi Thần',
+    faction: 'Phe Thiện',
+    desc: 'Thuở trẻ có chí học nhưng nhà nghèo, kiếm củi độ nhật. Vợ bỏ theo kẻ giàu có, nhưng vẫn quyết tâm dùi mài kinh sử. Công thành danh toại, từ chối để vợ cũ quay lại vì tình nghĩa đã dứt.',
+  },
+  'Thiệt Thê': {
+    play: 'Chu Mãi Thần',
+    faction: 'Trung Lập',
+    desc: 'Vợ của Chu Mãi Thần. Không chịu nổi cảnh nghèo túng kéo dài, bỏ đi theo quan Tuần Ty. Sau bị đánh ghen, cuộc đời phiêu dạt. Gặp lại chồng khi công thành danh toại, xin quay lại nhưng không được chấp nhận.',
+  },
+  'Tuần Ty': {
+    play: 'Chu Mãi Thần',
+    faction: 'Phe Phá Rối',
+    desc: 'Quan lại địa phương, đại diện giai cấp thống trị phong kiến, tính cách trăng hoa, lăng nhăng. Nổi tiếng với trích đoạn hài hước, châm biếm khi tán tỉnh, trêu ghẹo Đào Huế (vợ cũ của Chu Mãi Thần).',
+  },
+  'Kim Nham': {
+    play: 'Kim Nham',
+    faction: 'Phe Thiện',
+    desc: 'Nho sinh nghèo, ngụ học ở Kinh đô, được gả con gái viên huyện là Xúy Vân. Sau khi cưới vợ lại lên kinh đô theo đuổi công danh, nguyên nhân trực tiếp dẫn đến bi kịch của Xúy Vân.',
+  },
+  'Súy Vân': {
+    play: 'Kim Nham',
+    faction: 'Trung Lập',
+    desc: 'Con gái viên huyện, bị ép gả cho Kim Nham không tình yêu. Cô đơn kéo dài, bị Trần Phương lừa phỉnh, giả dại đòi ly hôn. Bị phản bội, hóa điên thật, cuối cùng gieo mình xuống sông tự vẫn.',
+  },
+  'Trần Phương': {
+    play: 'Kim Nham',
+    faction: 'Phe Phá Rối',
+    desc: 'Lãng tử dẻo miệng, dùng lời đường mật lừa gạt Xúy Vân bỏ chồng. Đại diện sự cám dỗ và giả dối, đến với Xúy Vân không bằng tình yêu thực sự mà bằng chiêu trò.',
+  },
+  'Trinh Nguyên': {
+    play: 'Trinh Nguyên',
+    faction: 'Phe Thiện',
+    desc: 'Người thợ dệt tơ tằm, vợ thứ của Tôn Dân. Sau khi chồng mất, tần tảo nuôi cả con chung lẫn con riêng. Đối diện án tử hình, tình nguyện hi sinh con đẻ để giữ mạng con riêng của chồng.',
+  },
+  'Tôn Mạnh': {
+    play: 'Trinh Nguyên',
+    faction: 'Phe Thiện',
+    desc: 'Con riêng của chồng Trinh Nguyên, được bà chăm sóc và yêu thương như con đẻ. Vô tình gặp xác người bị giết và chôn giúp nên bị oan tội giết người. Được giải oan nhờ đức hi sinh của mẹ và sự minh xét của Quan Án sát.',
+  },
+  'Tôn Trọng': {
+    play: 'Trinh Nguyên',
+    faction: 'Phe Thiện',
+    desc: 'Con đẻ của Trinh Nguyên. Cùng anh Tôn Mạnh bị oan tội giết người. Người mẹ tình nguyện hi sinh con đẻ (Tôn Trọng) để con riêng được sống. Được Quan Án sát giải oan, đoàn tụ cùng mẹ.',
+  },
+  'Quan Án Sát': {
+    play: 'Trinh Nguyên',
+    faction: 'Phe Thiện',
+    desc: 'Vị quan thanh liêm, sáng suốt và giàu lòng nhân ái. Không chỉ dựa vào luật pháp khô khan mà dùng cái tâm soi xét sự việc. Cảm động trước đức hi sinh của Trinh Nguyên, đình chỉ bản án, tìm ra kẻ thủ ác thực sự.',
+  },
+  'Từ Thức': {
+    play: 'Từ Thức Gặp Tiên',
+    faction: 'Phe Thiện',
+    desc: 'Tri huyện nhân từ, nho nhã, yêu thích phong cảnh. Vì cứu tiên nữ Giáng Hương mà từ quan, kết duyên với tiên. Sau thời gian sống cõi tiên, nhớ quê hương quay về trần gian, mọi thứ đã thay đổi, người thân không còn ai.',
+  },
+  'Giáng Hương': {
+    play: 'Từ Thức Gặp Tiên',
+    faction: 'Phe Thiện',
+    desc: 'Tiên nữ sống ở chốn bồng lai, sơ ý làm gãy cành hoa mẫu đơn quý, được Từ Thức cứu chuộc rồi kết duyên. Đau đớn tiễn chồng về trần gian, sau đó sống cô độc giữa cõi tiên — biểu tượng tình yêu thủy chung và bi kịch.',
+  },
+  'Dân Làng': {
+    play: 'Chiếu Chèo Đêm Trăng',
+    faction: 'Phe Thiện',
+    desc: 'Những con người lam lũ nhưng giàu tình nghĩa — linh hồn của gánh hát, người giữ cho làng chèo không rơi vào hỗn loạn. Phải tỉnh táo phân biệt đâu là người cùng phường hát, đâu là kẻ che giấu âm mưu.',
+  },
+  'Kẻ Phá Rối': {
+    play: 'Chiếu Chèo Đêm Trăng',
+    faction: 'Phe Phá Rối',
+    desc: 'Không phải quỷ, cũng chẳng phải người. Sống bằng sự mập mờ, gieo lời đồn, bóp méo câu hát. Giả vờ say mê nghệ thuật nhưng thực chất muốn sân đình rối ren, đêm đêm bắt cóc dân làng vào ngục.',
+  },
 };
 
-const rankGradient = {
-  S: 'linear-gradient(135deg, #B8860B, #FFD700, #D4AF37, #FFD700, #B8860B)',
-  A: 'linear-gradient(135deg, #6B0000, #CC2222, #FF4444, #CC2222, #6B0000)',
-  B: 'linear-gradient(135deg, #3B0066, #7B2FBE, #A855F7, #7B2FBE, #3B0066)',
-  C: 'linear-gradient(135deg, #0C2340, #1E4D80, #3B82F6, #1E4D80, #0C2340)',
-  D: 'linear-gradient(135deg, #1A1A1A, #4A5568, #718096, #4A5568, #1A1A1A)',
+// Map each character to their card order.
+
+const CHAR_PAGE = {
+  'Tên Hề': 2,
+  'Quan Âm Thị Kính': 3,
+  'Quan Án Sát': 4,
+  'Trương Viên': 5,
+  'Thị Phương': 6,
+  'Lưu Bình': 7,
+  'Kim Nham': 8,
+  'Châu Long': 9,
+  'Chu Mãi Thần': 10,
+  'Từ Thức': 11,
+  'Giáng Hương': 12,
+  'Dương Lễ': 13,
+  'Trinh Nguyên': 14,
+  'Tôn Mạnh': 15,
+  'Tôn Trọng': 16,
+  'Dân Làng': 17,
+  'Quỷ Đực': 18,
+  'Tuần Ty': 19,
+  'Kẻ Phá Rối': 20,
+  'Quỷ Cái': 21,
+  'Trần Phương': 22,
+  'Thị Mầu': 23,
+  'Thiệt Thê': 24,
+  'Thiện Sĩ': 25,
+  'Súy Vân': 26,
 };
 
-// Faction-based card background color matching the real cards
-const factionCardBg = {
-  'Phe Thiện': '#0a1a0a',
-  'Phe Phá Rối': '#2a0a00',
-  'Trung Lập': '#0a0a20',
-  'Quản trò': '#1a0a00',
+const CARD_IMAGE_BY_PAGE = {
+  2: '/cards/TenHe-back.png',
+  3: '/cards/ThiKinh-back.png',
+  4: '/cards/QuanAmSat-back.png',
+  5: '/cards/TruongVien-back.png',
+  6: '/cards/ThiPhuong-back.png',
+  7: '/cards/LuuBinh-back.png',
+  8: '/cards/KimNham-back.png',
+  9: '/cards/ChauLong-back.png',
+  10: '/cards/ChuMaThan-back.png',
+  11: '/cards/TuThuc-back.png',
+  12: '/cards/GiangHuong-back.png',
+  13: '/cards/DuongLe-back.png',
+  14: '/cards/TrinhNguyen-back.png',
+  15: '/cards/TonMang-back.png',
+  16: '/cards/TonTrong-back.png',
+  17: '/cards/DangLang-back.png',
+  18: '/cards/QuyDuc-back.png',
+  19: '/cards/TuanTy-back.png',
+  20: '/cards/KePhaRoi-back.png',
+  21: '/cards/QuyCai-back.png',
+  22: '/cards/TrangPhuong-back.png',
+  23: '/cards/ThiMau-back.png',
+  24: '/cards/ThietThe-back.png',
+  25: '/cards/ThienSi-back.png',
+  26: '/cards/SuyVan-back.png',
 };
-
-// Map each character to their illustration from the character handbook
-// These are approximate page-based references to the character art
-const CHARACTER_DATA = {
-  // BẠN CÓ THỂ THÊM frontImage VÀ backImage VÀO TỪNG NHÂN VẬT NHƯ VÍ DỤ BÊN DƯỚI
-  'Tên Hề': { emoji: '🎭', color: '#8B4513', faction: 'Quản trò', frontImage: '/cards/TenHe-back.png' },
-  'Quan Âm Thị Kính': { emoji: '🙏', color: '#1a3a1a', faction: 'Phe Thiện', frontImage: 'cards/ThiKinh-back.png' },
-  'Quan Án Sát': { emoji: '⚖️', color: '#1a2a1a', faction: 'Phe Thiện', frontImage: 'cards/QuanAmSat-back.png' },
-  'Thị Mầu': { emoji: '🌸', color: '#1a0a2a', faction: 'Trung Lập', frontImage: 'cards/ThiMau-back.png' },
-  'Kim Nham': { emoji: '📖', color: '#1a2a1a', faction: 'Phe Thiện', frontImage: 'cards/KimNham-back.png' },
-  'Lưu Bình': { emoji: '🪭', color: '#1a2a1a', faction: 'Phe Thiện', frontImage: 'cards/LuuBinh-back.png' },
-  'Trương Viên': { emoji: '⚔️', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/TruongVien-back.png' },
-  'Thị Phương': { emoji: '🎵', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/ThiPhuong-back.png' },
-  'Quỷ Đực': { emoji: '👺', color: '#2a0a00', faction: 'Phe Phá Rối', frontImage: 'cards/QuyDuc-back.png' },
-  'Quỷ Cái': { emoji: '👹', color: '#2a0a00', faction: 'Phe Phá Rối', frontImage: 'cards/QuyCai-back.png' },
-  'Châu Long': { emoji: '🌹', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/ChauLong-back.png' },
-  'Tuần Ty': { emoji: '🎪', color: '#2a0a00', faction: 'Phe Phá Rối', frontImage: 'cards/TuanTy-back.png' },
-  'Kẻ Phá Rối': { emoji: '🔮', color: '#2a0a00', faction: 'Phe Phá Rối', frontImage: 'cards/KePhaRoi-back.png' },
-  'Trần Phương': { emoji: '🗡️', color: '#2a0a00', faction: 'Phe Phá Rối', frontImage: 'cards/TrangPhuong-back.png' },
-  'Chu Mãi Thần': { emoji: '📚', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/ChuMaThan-back.png' },
-  'Thiệt Thê': { emoji: '🪭', color: '#0a0a20', faction: 'Trung Lập', frontImage: 'cards/ThietThe-back.png' },
-  'Từ Thức': { emoji: '✨', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/TuThuc-back.png' },
-  'Giáng Hương': { emoji: '🌙', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/GiangHuong-back.png' },
-  'Thiện Sĩ': { emoji: '📜', color: '#0a0a20', faction: 'Trung Lập', frontImage: 'cards/ThienSi-back.png' },
-  'Dương Lễ': { emoji: '🏛️', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/DuongLe-back.png' },
-  'Trinh Nguyên': { emoji: '💜', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/TrinhNguyen-back.png' },
-  'Dân Làng': { emoji: '🏡', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/DangLang-back.png' },
-  'Súy Vân': { emoji: '🌿', color: '#0a0a20', faction: 'Trung Lập', frontImage: 'cards/SuyVan-back.png' },
-  'Tôn Mạnh': { emoji: '🏺', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/TonMang-back.png' },
-  'Tôn Trọng': { emoji: '🏺', color: '#0a1a0a', faction: 'Phe Thiện', frontImage: 'cards/TonTrong-back.png' },
-};
-
-function GoldCorners() {
-  return (
-    <>
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{ zIndex: 3 }}>
-        {/* Outer gold frame */}
-        <div className="absolute inset-[3px] rounded-sm" style={{
-          border: '1px solid rgba(212,175,55,0.7)',
-          boxShadow: 'inset 0 0 8px rgba(212,175,55,0.15), 0 0 4px rgba(212,175,55,0.3)',
-        }} />
-        {/* Inner thin frame */}
-        <div className="absolute inset-[6px] rounded-sm" style={{
-          border: '1px solid rgba(212,175,55,0.25)',
-        }} />
-        {/* Corner ornaments */}
-        {[['top-[3px] left-[3px]', 'border-t-2 border-l-2 rounded-tl-sm'],
-        ['top-[3px] right-[3px]', 'border-t-2 border-r-2 rounded-tr-sm'],
-        ['bottom-[3px] left-[3px]', 'border-b-2 border-l-2 rounded-bl-sm'],
-        ['bottom-[3px] right-[3px]', 'border-b-2 border-r-2 rounded-br-sm'],
-        ].map(([pos, borders], i) => (
-          <div key={i} className={`absolute ${pos} w-4 h-4 ${borders}`} style={{ borderColor: '#D4AF37' }} />
-        ))}
-        {/* Top center diamond */}
-        <div className="absolute top-[4px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rotate-45" style={{ background: '#D4AF37', opacity: 0.8 }} />
-        {/* Bottom center diamond */}
-        <div className="absolute bottom-[4px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rotate-45" style={{ background: '#D4AF37', opacity: 0.8 }} />
-      </div>
-    </>
-  );
-}
 
 export default function CharacterCard({ character, index }) {
   const [flipped, setFlipped] = useState(false);
-  const bg = factionCardBg[character.faction] || '#0a0a0a';
-  const charData = CHARACTER_DATA[character.name] || { emoji: '🎭', color: '#1a1a1a' };
+  const page = CHAR_PAGE[character.name] || 2;
+  const cardImage = CARD_IMAGE_BY_PAGE[page] || '/cards/TenHe-back.png';
+  const lore = CHAR_LORE[character.name];
 
   return (
     <motion.div
@@ -109,183 +207,93 @@ export default function CharacterCard({ character, index }) {
           aspectRatio: '67/96',
         }}
       >
-        {/* ── FRONT ── */}
+        {/* FRONT — card art image */}
         <div
-          className="absolute inset-0 rounded-sm overflow-hidden bg-cover bg-center"
-          style={{
-            backfaceVisibility: 'hidden',
-            background: charData.frontImage ? `url('${charData.frontImage}') center/cover no-repeat` : bg
-          }}
+          className="absolute inset-0 rounded-sm bg-black overflow-hidden"
+          style={{ backfaceVisibility: 'hidden' }}
         >
-          {!charData.frontImage && (
-            <>
-              <GoldCorners />
-
-              {/* Rank badge top-left */}
-              <div
-                className="absolute top-[10px] left-[10px] z-10 w-6 h-6 flex items-center justify-center rounded-sm font-playfair font-black"
-                style={{
-                  background: rankGradient[character.rank],
-                  fontSize: '13px',
-                  color: '#0A0A00',
-                  textShadow: '0 1px 2px rgba(255,255,255,0.4)',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.5)',
-                }}
-              >
-                {character.rank}
-              </div>
-
-              {/* Character name top-right in calligraphic style */}
-              <div className="absolute top-[8px] right-[10px] z-10 text-right max-w-[45%]">
-                <p
-                  className="font-playfair italic leading-[1.1]"
-                  style={{ fontSize: '9px', color: '#F5DEB3', textShadow: '0 1px 4px rgba(0,0,0,0.9)' }}
-                >
-                  {character.name.split(' ').map((word, i) => (
-                    <span key={i} className="block">{word}</span>
-                  ))}
-                </p>
-              </div>
-
-              {/* Main art area */}
-              <div
-                className="absolute flex flex-col items-center justify-center"
-                style={{
-                  top: '22%',
-                  left: '8%',
-                  right: '8%',
-                  bottom: '22%',
-                }}
-              >
-                {/* Glow behind character */}
-                <div
-                  className="absolute inset-0 rounded-full opacity-20"
-                  style={{
-                    background: character.faction === 'Phe Thiện'
-                      ? 'radial-gradient(circle, #D4AF37 0%, transparent 70%)'
-                      : character.faction === 'Phe Phá Rối'
-                        ? 'radial-gradient(circle, #FF4444 0%, transparent 70%)'
-                        : 'radial-gradient(circle, #9F7AEA 0%, transparent 70%)',
-                  }}
-                />
-                {/* Character symbol / icon — large */}
-                <div
-                  className="relative z-10 flex items-center justify-center rounded-full"
-                  style={{
-                    width: '55%',
-                    aspectRatio: '1',
-                    background: 'rgba(212,175,55,0.07)',
-                    border: '1px solid rgba(212,175,55,0.3)',
-                    fontSize: 'clamp(18px, 5vw, 32px)',
-                  }}
-                >
-                  {charData.emoji}
-                </div>
-                <div className="mt-1 font-playfair text-center font-semibold" style={{ fontSize: '8px', color: '#E8C97A', textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}>
-                  {character.name}
-                </div>
-              </div>
-
-              {/* Decorative divider above faction label */}
-              <div className="absolute bottom-[18%] left-[10%] right-[10%] h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent)' }} />
-
-              {/* Faction label bottom */}
-              <div className="absolute bottom-[8%] left-0 right-0 flex justify-center z-10">
-                <span
-                  className="font-montserrat uppercase tracking-widest"
-                  style={{ fontSize: '6px', color: '#D4AF37', textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}
-                >
-                  {character.faction}
-                </span>
-              </div>
-
-              {/* Subtle vignette */}
-              <div className="absolute inset-0 pointer-events-none" style={{
-                background: 'radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.5) 100%)',
-              }} />
-            </>
-          )}
+          {/* Render local image to guarantee full-frame fit and no inner scrollbars */}
+          <img
+            src={cardImage}
+            alt={character.name}
+            className="h-full w-full object-cover"
+            draggable={false}
+          />
         </div>
 
-        {/* ── BACK ── */}
+        {/* BACK — lore info from character handbook */}
         <div
-          className="absolute inset-0 rounded-sm overflow-hidden bg-cover bg-center"
+          className="absolute inset-0 overflow-hidden rounded-sm"
           style={{
             backfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
-            background: charData.backImage
-              ? `url('${charData.backImage}') center/cover no-repeat`
-              : 'linear-gradient(160deg, #1A0A02 0%, #0A0502 50%, #140800 100%)',
+            background: 'radial-gradient(circle at 50% 30%, #1a0f05 0%, #050301 100%)',
           }}
         >
-          {!charData.backImage && (
-            <>
-              <GoldCorners />
+          {/* Gold border and corners */}
+          <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 2 }}>
+            <div className="absolute inset-[4px] rounded-sm border border-[#D4AF37]/20" />
+            {[
+              'top-[2px] left-[2px] border-t-2 border-l-2',
+              'top-[2px] right-[2px] border-t-2 border-r-2',
+              'bottom-[2px] left-[2px] border-b-2 border-l-2',
+              'bottom-[2px] right-[2px] border-b-2 border-r-2'
+            ].map((pos, i) => (
+              <div key={i} className={`absolute ${pos} w-3 h-3`} style={{ borderColor: '#D4AF37' }} />
+            ))}
+          </div>
 
-              <div className="absolute inset-[8px] flex flex-col items-center justify-center gap-1">
-                {/* Big rank */}
-                <div
-                  className="font-playfair font-black leading-none"
-                  style={{
-                    fontSize: 'clamp(22px, 6vw, 40px)',
-                    background: rankGradient[character.rank],
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    textShadow: 'none',
-                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.8))',
-                  }}
-                >
-                  {character.rank}
-                </div>
-                <p className="font-montserrat uppercase tracking-widest text-center" style={{ fontSize: '6px', color: '#D4AF37' }}>
-                  {rankDescriptions[character.rank]}
-                </p>
+          <div className="absolute inset-0 flex flex-col items-center justify-start pt-6 px-4 gap-1.5" style={{ zIndex: 3 }}>
+            {/* Character name */}
+            <h3 className="font-playfair font-bold text-center leading-tight text-[#F5DEB3]" style={{ fontSize: 'clamp(11px, 2.8vw, 16px)', textShadow: '0 0 10px rgba(212,175,55,0.2)' }}>
+              {character.name}
+            </h3>
 
-                <div className="w-8 h-px my-1" style={{ background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)' }} />
+            {/* Play */}
+            {lore?.play && (
+              <p className="font-montserrat uppercase tracking-[0.15em] text-center text-[#D4AF37]/80" style={{ fontSize: 'clamp(6px, 1.5vw, 9px)' }}>
+                VỞ CHÈO: {lore.play}
+              </p>
+            )}
 
-                <p className="font-playfair text-center font-semibold" style={{ fontSize: '8px', color: '#F5DEB3' }}>
-                  {character.name}
-                </p>
+            {/* Glowing Divider */}
+            <div className="w-16 h-px my-1 relative">
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)' }} />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 rounded-full bg-[#D4AF37] shadow-[0_0_5px_#D4AF37]" />
+            </div>
 
-                {/* Power bars */}
-                <div className="w-full mt-1 space-y-1.5 px-1">
-                  {[
-                    { label: 'Quyền', val: character.power },
-                    { label: 'Mưu', val: character.deception },
-                    { label: 'Đức', val: character.virtue },
-                  ].map((stat) => (
-                    <div key={stat.label} className="flex items-center gap-1">
-                      <span className="font-montserrat w-6 shrink-0 text-right" style={{ fontSize: '6px', color: '#A0845A' }}>{stat.label}</span>
-                      <div className="flex-1 rounded-full overflow-hidden" style={{ height: '4px', background: 'rgba(212,175,55,0.12)' }}>
-                        <div
-                          className="h-full rounded-full"
-                          style={{
-                            width: `${stat.val * 10}%`,
-                            background: 'linear-gradient(90deg, #B8860B, #D4AF37, #FFD700)',
-                            boxShadow: '0 0 4px rgba(212,175,55,0.6)',
-                          }}
-                        />
-                      </div>
-                      <span className="font-montserrat" style={{ fontSize: '6px', color: '#D4AF37' }}>{stat.val}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Faction badge */}
-                <div
-                  className="mt-1.5 px-2 py-0.5 rounded-sm font-montserrat uppercase tracking-widest"
-                  style={{
-                    fontSize: '5.5px',
-                    color: '#D4AF37',
-                    background: 'rgba(212,175,55,0.1)',
-                    border: '1px solid rgba(212,175,55,0.35)',
-                  }}
-                >
-                  {character.faction}
-                </div>
+            {/* Faction badge */}
+            {lore?.faction && (
+              <div
+                className="mt-1 px-3 py-0.5 rounded-sm font-montserrat uppercase tracking-[0.2em] bg-[#D4AF37]/5 border border-[#D4AF37]/40"
+                style={{ fontSize: 'clamp(5px, 1.2vw, 7.5px)', color: '#D4AF37' }}
+              >
+                {lore.faction}
               </div>
-            </>
-          )}
+            )}
+
+            {/* Description */}
+            {lore?.desc && (
+              <p
+                className="mt-2 font-montserrat text-center leading-relaxed text-[#F5DEB3]/80"
+                style={{
+                  fontSize: 'clamp(6px, 1.4vw, 8.5px)',
+                  padding: '0 2px',
+                }}
+              >
+                {lore.desc}
+              </p>
+            )}
+
+            {!lore && (
+              <p className="font-montserrat uppercase tracking-widest text-center text-[#D4AF37] mt-4" style={{ fontSize: '7px' }}>
+                {character.faction}
+              </p>
+            )}
+          </div>
+
+          {/* Subtle Vignette */}
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_40%,rgba(0,0,0,0.6)_100%)]" />
         </div>
       </div>
     </motion.div>
