@@ -4,13 +4,13 @@ import { Play } from 'lucide-react';
 import SectionDivider from './SectionDivider';
 
 const PLAYS = [
-  { name: 'Quan Âm Thị Kính', desc: 'Bi kịch của Thị Kính — oan khuất chồng chất, lòng nhân từ bất diệt', videoQuery: 'Quan Am Thi Kinh cheo co' },
-  { name: 'Trương Viên', desc: 'Chuyện tình bi tráng giữa chiến tranh, lòng trung trinh của Thị Phương', videoQuery: 'Truong Vien cheo co' },
-  { name: 'Kim Nham', desc: 'Bi kịch Súy Vân giả dại — khi tình yêu bị phản bội, đẩy con người vào bước đường cùng', videoQuery: 'Kim Nham cheo co' },
-  { name: 'Chu Mãi Thần', desc: 'Câu chuyện về lòng kiên trì và sự bạc bẽo của thế thái nhân tình', videoQuery: 'Chu Mai Than cheo co' },
-  { name: 'Lưu Bình Dương Lễ', desc: 'Tình bạn tri kỷ vượt qua gian khổ, hy sinh thầm lặng của Châu Long', videoQuery: 'Luu Binh Duong Le cheo co' },
-  { name: 'Từ Thức Gặp Tiên', desc: 'Chốn bồng lai tiên cảnh — khi con người chạm đến giấc mơ ngàn đời', videoQuery: 'Tu Thuc gap tien cheo co' },
-  { name: 'Trinh Nguyên', desc: 'Tấm lòng cao thượng của người mẹ dành cho các con', videoQuery: 'Trinh Nguyen cheo co' },
+  { name: 'Quan Âm Thị Kính', desc: 'Bi kịch của Thị Kính — oan khuất chồng chất, lòng nhân từ bất diệt', videoQuery: 'https://www.youtube.com/watch?v=ZxVY5duWmbg' },
+  { name: 'Trương Viên', desc: 'Chuyện tình bi tráng giữa chiến tranh, lòng trung trinh của Thị Phương', videoQuery: 'https://www.youtube.com/watch?v=msJjQQILUFU' },
+  { name: 'Kim Nham', desc: 'Bi kịch Súy Vân giả dại — khi tình yêu bị phản bội, đẩy con người vào bước đường cùng', videoQuery: 'https://www.youtube.com/watch?v=urH2Utyheqo' },
+  { name: 'Chu Mãi Thần', desc: 'Câu chuyện về lòng kiên trì và sự bạc bẽo của thế thái nhân tình', videoQuery: 'https://www.youtube.com/watch?v=Kn22EDG7iWY' },
+  { name: 'Lưu Bình Dương Lễ', desc: 'Tình bạn tri kỷ vượt qua gian khổ, hy sinh thầm lặng của Châu Long', videoQuery: 'https://www.youtube.com/watch?v=ohOz5PDTW7I' },
+  { name: 'Từ Thức Gặp Tiên', desc: 'Chốn bồng lai tiên cảnh — khi con người chạm đến giấc mơ ngàn đời', videoQuery: 'https://www.youtube.com/watch?v=IiNc-222rDQ' },
+  { name: 'Trinh Nguyên', desc: 'Tấm lòng cao thượng của người mẹ dành cho các con', videoQuery: 'https://www.youtube.com/watch?v=owZZ8_P2oaY' },
 ];
 
 export default function TheatreSection({ bgImage }) {
@@ -41,7 +41,7 @@ export default function TheatreSection({ bgImage }) {
           {PLAYS.map((play, i) => (
             <motion.a
               key={play.name}
-              href={`https://www.youtube.com/results?search_query=${encodeURIComponent(play.videoQuery)}`}
+              href={play.videoQuery}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
