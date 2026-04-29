@@ -1,38 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
 import SectionDivider from './SectionDivider';
 
 const DECK_LINES = [
-  { front: '"Chiềng làng chiềng chạ, Thượng hạ Tây Đông, Con gái phú ông, Tên là Mầu Thị..."', back: 'Lời của thằng Mõ khi loan tin Thị Mầu chửa hoang — Vở Quan Âm Thị Kính' },
-  { front: '"Tôi Thị Mầu con gái phú ông, cha mẹ tôi tôn kính một lòng"', back: 'Lời thoại của Thị Mầu ở phân cảnh giới thiệu' },
-  { front: '"Nam mô a di đà phật, tôi niệm nam mô a di đà phật"', back: 'Lời tụng kinh của Thị Kính' },
-  { front: '"Đạo vợ chồng trăm năm kết tóc, Trước đẹp mặt chàng, sau đẹp mặt ta"', back: 'Thị Kính với chồng Thiện Sĩ — trích đoạn "Nỗi oan hại chồng"' },
-  { front: '"Lấy chồng cho con là phải kén tông, Mà gả vợ cho con là phải kén giống"', back: 'Lời mạt sát của Sùng bà với Thị Kính' },
-  { front: '"Trình lạy mẹ, biên cương có giặc, Con phải ra phụng mệnh quân vương..."', back: 'Lời Trương Viên từ biệt mẹ lên đường đánh giặc' },
-  { front: '"Trương Viên chàng ơi, chàng đi muôn dặm ải văng nơi xa..."', back: 'Thị Phương trong phân cảnh chia ly chồng' },
-  { front: '"Phần tôi đành chịu mù loà, Xin nguyện dâng mắt mình cứu mẹ"', back: 'Thị Phương hy sinh đôi mắt để cứu mẹ chồng' },
-  { front: '"Mười tám năm ròng nằm gai nếm mật, Lòng nhớ thương ngùn ngụt lúc nào nguôi"', back: 'Trương Viên nhớ mẹ và vợ sau 18 năm binh lửa' },
-  { front: '"Chị em ơi, tôi ra đây có phải xưng danh không nhỉ?"', back: 'Lời tự xưng danh nổi tiếng của Xúy Vân — "Xúy Vân giả dại"' },
+  { front: "/flashcard1/0.png", back: "/flashcard1/0.1.png" },
+  { front: "/flashcard1/1.png", back: "/flashcard1/1.1.png" },
+  { front: "/flashcard1/2.png", back: "/flashcard1/2.1.png" },
+  { front: "/flashcard1/3.png", back: "/flashcard1/3.1.png" },
+  { front: "/flashcard1/4.png", back: "/flashcard1/4.1.png" },
+  { front: "/flashcard1/5.png", back: "/flashcard1/5.1.png" },
+  { front: "/flashcard1/6.png", back: "/flashcard1/6.1.png" },
+  { front: "/flashcard1/7.png", back: "/flashcard1/7.1.png" },
+  { front: "/flashcard1/8.png", back: "/flashcard1/8.1.png" },
+  { front: "/flashcard1/9.png", back: "/flashcard1/9.1.png" },
+  { front: "/flashcard1/10.png", back: "/flashcard1/10.1.png" },
+  { front: "/flashcard1/11.png", back: "/flashcard1/11.1.png" },
+  { front: "/flashcard1/12.png", back: "/flashcard1/12.2.png" },
+  { front: "/flashcard1/13.png", back: "/flashcard1/13.1.png" },
+  { front: "/flashcard1/14.png", back: "/flashcard1/14.1.png" },
+  { front: "/flashcard1/15.png", back: "/flashcard1/15.1.png" },
+  { front: "/flashcard1/16.png", back: "/flashcard1/16.1.png" },
+  { front: "/flashcard1/17.png", back: "/flashcard1/17.1.png" },
+  { front: "/flashcard1/18.png", back: "/flashcard1/18.1.png" },
+  { front: "/flashcard1/19.png", back: "/flashcard1/19.1.png" },
+  { front: "/flashcard1/20.png", back: "/flashcard1/20.1.png" },
+  { front: "/flashcard1/21.png", back: "/flashcard1/21.1.png" },
+  { front: "/flashcard1/22.png", back: "/flashcard1/22.1.png" },
+  { front: "/flashcard1/23.png", back: "/flashcard1/23.1.png" },
+  { front: "/flashcard1/24.png", back: "/flashcard1/24.1.png" },
+  { front: "/flashcard1/25.png", back: "/flashcard1/25.1.png" },
+  { front: "/flashcard1/26.png", back: "/flashcard1/26.1.png" },
+  { front: "/flashcard1/27.png", back: "/flashcard1/27.1.png" },
 ];
 
 const DECK_MELODIES = [
-  { front: '"Nàng ở nhà tần tảo sớm khuya, Trực phòng không là phận nữ nhi..."', back: 'Kim Nham với Xúy Vân — ước nguyện thoả chí tang bồng' },
-  { front: '"Chẳng phải thiếp muốn tranh giành ngôi thứ, Mà thiếp chỉ lo gìn giữ chút tình..."', back: 'Suý Vân trách chồng Kim Nham khi niềm tin bị phản bội' },
-  { front: '"Tôi nay đã ngán sự đời, Chỉ mong gặp được một người tri âm..."', back: 'Trần Phương hứa hẹn giả tạo với Suý Vân' },
-  { front: '"Thấy chữ đề là quán Nghinh Hương, Quán mát mẻ, tôi vào chơi tạm trú..."', back: 'Lưu Bình giãi tỏ tấm lòng khi gặp Châu Long' },
-  { front: '"Hành lý này thiếp lĩnh, thiếp mang, Thiếp xin theo về cho đến gia trang..."', back: 'Châu Long xin Lưu Bình cho theo về sửa túi nâng khăn' },
-  { front: '"Ai ơi chớ lấy học trò, Dài lưng tốn vải, ăn no lại nằm"', back: 'Thiệt Thê chê bai chồng Chu Mãi Thần' },
-  { front: '"Em cứ sống như mây gặp gió, Đời bướm hoa chẳng nghĩ nông sâu..."', back: 'Thiệt Thê bộc lộ tâm hồn lãng mạn, vô ưu' },
-  { front: '"Nhác thấy sơn thanh, thuỷ tú, Chợt nhìn xem nhân kiệt, địa linh..."', back: 'Từ Thức chèo thuyền qua cửa Thần phù' },
-  { front: '"Dẫu có phải lặn lội thân mưa thân cò vất vả..."', back: 'Trinh Nguyên — tấm lòng cao thượng của người mẹ' },
-  { front: '"Mười tám năm ròng nằm gai nếm mật..."', back: 'Trương Viên nhớ thương tới mẹ và vợ' },
+  { front: "/flashcard2/0.png", back: "/flashcard2/0.1.png" },
+  { front: "/flashcard2/1.png", back: "/flashcard2/1.1.png" },
+  { front: "/flashcard2/2.png", back: "/flashcard2/2.1.png" },
+  { front: "/flashcard2/3.png", back: "/flashcard2/3.1.png" },
+  { front: "/flashcard2/4.png", back: "/flashcard2/4.1.png" },
+  { front: "/flashcard2/5.png", back: "/flashcard2/5.1.png" },
+  { front: "/flashcard2/6.png", back: "/flashcard2/6.1.png" },
+  { front: "/flashcard2/7.png", back: "/flashcard2/7.1.png" },
+  { front: "/flashcard2/8.png", back: "/flashcard2/8.1.png" },
+  { front: "/flashcard2/9.png", back: "/flashcard2/9.1.png" },
+  { front: "/flashcard2/10.png", back: "/flashcard2/10.1.png" },
+  { front: "/flashcard2/11.png", back: "/flashcard2/11.1.png" },
+  { front: "/flashcard2/12.png", back: "/flashcard2/12.1.png" },
+  { front: "/flashcard2/13.png", back: "/flashcard2/13.1.png" },
+  { front: "/flashcard2/14.png", back: "/flashcard2/14.1.png" },
+  { front: "/flashcard2/15.png", back: "/flashcard2/15.1.png" },
+  { front: "/flashcard2/16.png", back: "/flashcard2/16.1.png" },
+  { front: "/flashcard2/17.png", back: "/flashcard2/17.1.png" },
+  { front: "/flashcard2/18.png", back: "/flashcard2/18.1.png" },
+  { front: "/flashcard2/19.png", back: "/flashcard2/19.1.png" },
 ];
+const isImage = (str) => typeof str === 'string' && (str.startsWith('http') || str.match(/\.(jpeg|jpg|gif|png|svg|webp)/i));
 
 function FlashcardDeck({ title, subtitle, cards, deckColor }) {
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  const [frontRatio, setFrontRatio] = useState('4/3');
+  const [backRatio, setBackRatio] = useState('4/3');
 
+  useEffect(() => {
+    if (!isImage(cards[index].front)) setFrontRatio('4/3');
+    if (!isImage(cards[index].back)) setBackRatio('4/3');
+  }, [index, cards]);
+
+  const currentRatio = flipped ? backRatio : frontRatio;
   const next = () => { setFlipped(false); setTimeout(() => setIndex((i) => (i + 1) % cards.length), 150); };
   const prev = () => { setFlipped(false); setTimeout(() => setIndex((i) => (i - 1 + cards.length) % cards.length), 150); };
 
@@ -43,8 +80,8 @@ function FlashcardDeck({ title, subtitle, cards, deckColor }) {
 
       {/* Card */}
       <div
-        className="w-full max-w-sm aspect-[4/3] cursor-pointer mb-4"
-        style={{ perspective: '1200px' }}
+        className="w-full max-w-xl cursor-pointer mb-4"
+        style={{ perspective: '1200px', aspectRatio: currentRatio }}
         onClick={() => setFlipped(!flipped)}
       >
         <div
@@ -53,21 +90,39 @@ function FlashcardDeck({ title, subtitle, cards, deckColor }) {
         >
           {/* Front */}
           <div
-            className={`absolute inset-0 rounded-lg border ${deckColor} p-6 flex items-center justify-center`}
+            className={`absolute inset-0 rounded-lg border ${deckColor} ${isImage(cards[index].front) ? 'p-0 overflow-hidden' : 'p-6'} flex items-center justify-center`}
             style={{ backfaceVisibility: 'hidden' }}
           >
-            <p className="font-playfair text-sm md:text-base text-primary italic text-center leading-relaxed">
-              {cards[index].front}
-            </p>
+            {isImage(cards[index].front) ? (
+              <img
+                src={cards[index].front}
+                alt="Front"
+                className="w-full h-full object-cover"
+                onLoad={(e) => setFrontRatio(`${e.currentTarget.naturalWidth}/${e.currentTarget.naturalHeight}`)}
+              />
+            ) : (
+              <p className="font-playfair text-sm md:text-base text-primary italic text-center leading-relaxed">
+                {cards[index].front}
+              </p>
+            )}
           </div>
           {/* Back */}
           <div
-            className="absolute inset-0 rounded-lg border border-primary/40 bg-card p-6 flex items-center justify-center"
+            className={`absolute inset-0 rounded-lg border border-primary/40 bg-card ${isImage(cards[index].back) ? 'p-0 overflow-hidden' : 'p-6'} flex items-center justify-center`}
             style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
           >
-            <p className="font-montserrat text-sm text-foreground/80 text-center leading-relaxed">
-              {cards[index].back}
-            </p>
+            {isImage(cards[index].back) ? (
+              <img
+                src={cards[index].back}
+                alt="Back"
+                className="w-full h-full object-cover"
+                onLoad={(e) => setBackRatio(`${e.currentTarget.naturalWidth}/${e.currentTarget.naturalHeight}`)}
+              />
+            ) : (
+              <p className="font-montserrat text-sm text-foreground/80 text-center leading-relaxed">
+                {cards[index].back}
+              </p>
+            )}
           </div>
         </div>
       </div>
