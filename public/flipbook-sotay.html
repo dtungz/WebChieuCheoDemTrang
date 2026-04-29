@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Tay Luật Chơi & Quản Trò</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+
+    <style>
+        :root {
+            --clr-night: hsl(0, 0%, 4%);
+            --clr-night-surface: hsl(0, 0%, 7%);
+            --clr-ink: hsl(0, 0%, 0%);
+            --clr-gold: hsl(43, 76%, 52%);
+            --clr-gold-dim: hsl(43, 76%, 40%);
+            --clr-crimson: hsl(0, 97%, 15%);
+            --clr-parchment: hsl(37, 30%, 85%);
+            --clr-parchment-dim: hsl(37, 15%, 55%);
+            --clr-border: hsl(0, 30%, 18%);
+            --font-display: 'Playfair Display', serif;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 48px;
+            --space-2xl: 96px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: transparent;
+            color: var(--clr-parchment);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Book Container */
+        .book-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .flip-book {
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            display: none;
+            /* Hidden until loaded */
+        }
+
+        /* Page Styling */
+        .page {
+            background-color: #f4ecd8;
+            color: #2c251d;
+            border: 1px solid #d3c4a6;
+            overflow: hidden;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.1);
+            font-family: var(--font-body);
+        }
+
+        .page-content {
+            padding: var(--space-lg) var(--space-lg) 60px var(--space-lg);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Page Decorations */
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            border: 1px solid rgba(44, 37, 29, 0.2);
+            pointer-events: none;
+        }
+
+        /* Cover styling */
+        .page-cover {
+            background-color: #2c251d;
+            color: var(--clr-gold);
+            text-align: center;
+            justify-content: center;
+        }
+
+        .page-cover::before {
+            border: 2px solid var(--clr-gold);
+        }
+
+        /* Book Controls */
+        .book-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+            margin-top: var(--space-lg);
+            background: rgba(30, 30, 35, 0.6);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: 30px;
+            border: 1px solid var(--clr-border);
+            box-sizing: border-box;
+        }
+
+        .book-btn {
+            background: transparent;
+            color: var(--clr-gold);
+            border: 1px solid var(--clr-gold);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            background: var(--clr-gold);
+            color: var(--clr-night);
+        }
+
+        .page-number {
+            display: none;
+        }
+
+        .page-cover .page-number {
+            display: none;
+        }
+
+        /* Typography for Book */
+        .book-title {
+            font-family: var(--font-display);
+            color: #8b1e1e;
+            margin-top: 0;
+            margin-bottom: var(--space-sm);
+            text-align: center;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #8b1e1e;
+            padding-bottom: 4px;
+        }
+
+        .book-subtitle {
+            font-weight: bold;
+            color: #2c251d;
+            margin-top: var(--space-sm);
+            margin-bottom: var(--space-xs);
+            font-size: 1rem;
+        }
+
+        .book-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--space-md);
+            font-size: 0.85rem;
+        }
+
+        .book-table th,
+        .book-table td {
+            border: 1px solid rgba(44, 37, 29, 0.3);
+            padding: 6px;
+            text-align: left;
+        }
+
+        .book-table th {
+            background-color: rgba(44, 37, 29, 0.05);
+            font-weight: bold;
+        }
+
+        .book-text {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: var(--space-xs);
+        }
+
+        .book-note {
+            font-style: italic;
+            background: rgba(139, 30, 30, 0.05);
+            padding: 10px;
+            border-left: 3px solid #8b1e1e;
+            font-size: 0.85rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .cover-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .cover-subtitle {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: var(--clr-parchment);
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="book-container">
+        <div class="flip-book" id="handbook">
+            <!-- Dynamic pages will be inserted here -->
+        </div>
+
+        <div class="book-controls">
+            <button class="book-btn" id="btn-prev">❮ Trang Trước</button>
+            <div class="page-indicator" style="color: var(--clr-parchment);">
+                Trang <span id="page-current">1</span> / <span id="page-total">0</span>
+            </div>
+            <button class="book-btn" id="btn-next">Trang Sau ❯</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const handbookEl = document.getElementById('handbook');
+            const pageTotalEl = document.getElementById('page-total');
+            const pageCurrentEl = document.getElementById('page-current');
+
+            // Parse query parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookType = urlParams.get('book') || 'quantro';
+
+            // Config for each book
+            const books = {
+                'quantro': {
+                    path: '/SoTayQuanTro/',
+                    pages: 7,
+                    width: 800,
+                    height: 600
+                },
+                'luatchoi': {
+                    path: '/SoTayLuatChoi/',
+                    pages: 17,
+                    width: 800,
+                    height: 600
+                }
+            };
+
+            const config = books[bookType] || books['quantro'];
+
+            // Generate pages
+            for (let i = 1; i <= config.pages + 1; i++) {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'page';
+
+                // Add cover class to first and last pages
+                if (i === 1 || i === config.pages + 1) {
+                    pageDiv.classList.add('page-cover');
+                }
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'page-content';
+                contentDiv.style.padding = '0';
+
+                const img = document.createElement('img');
+                // If it's the last page, use the first image (1.png) as back cover
+                const imgSrc = (i === config.pages + 1) ? 1 : i;
+                img.src = `${config.path}${imgSrc}.png`;
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'contain';
+                img.style.display = 'block';
+                img.alt = `Page ${i}`;
+
+                contentDiv.appendChild(img);
+                pageDiv.appendChild(contentDiv);
+                handbookEl.appendChild(pageDiv);
+            }
+
+            if (handbookEl) {
+                // Init StPageFlip
+                const pageFlip = new St.PageFlip(handbookEl, {
+                    width: config.width,
+                    height: config.height,
+                    size: "stretch",
+                    minWidth: 400,
+                    maxWidth: 1000,
+                    minHeight: 300,
+                    maxHeight: 800,
+                    maxShadowOpacity: 0.5,
+                    showCover: true,
+                    mobileScrollSupport: false
+                });
+
+                // Load pages
+                pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+                // Show the book container
+                handbookEl.style.display = 'block';
+
+                // Update UI controls
+                const btnPrev = document.getElementById('btn-prev');
+                const btnNext = document.getElementById('btn-next');
+                const btnClose = document.getElementById('btn-close');
+
+                // Set total pages
+                pageTotalEl.textContent = pageFlip.getPageCount();
+
+                // Event listeners for buttons
+                btnPrev.addEventListener('click', () => {
+                    pageFlip.flipPrev();
+                });
+
+                btnNext.addEventListener('click', () => {
+                    if (pageFlip.getCurrentPageIndex() === pageFlip.getPageCount() - 1) {
+                        pageFlip.flip(0); // Loop back to start if at the end
+                    } else {
+                        pageFlip.flipNext();
+                    }
+                });
+
+                if (btnClose) {
+                    btnClose.addEventListener('click', () => {
+                        pageFlip.flip(0); // Flip back to the first page (cover)
+                    });
+                }
+
+                const updatePageNumber = (index) => {
+                    const currentIndex = (index !== undefined) ? index : pageFlip.getCurrentPageIndex();
+                    pageCurrentEl.textContent = currentIndex + 1;
+                };
+
+                // Event listener for page flip
+                pageFlip.on('flip', (e) => {
+                    updatePageNumber(e.data);
+
+                    // Auto-close logic: if we reached the last page, wait a bit then flip back to cover
+                    if (e.data >= pageFlip.getPageCount() - 1) {
+                        setTimeout(() => {
+                            if (pageFlip.getCurrentPageIndex() >= pageFlip.getPageCount() - 1) {
+                                pageFlip.flip(0);
+                            }
+                        }, 2000); // Wait 2 seconds before closing
+                    }
+                });
+
+                // Listen to other events just in case
+                pageFlip.on('changeState', (e) => {
+                    if (e.data === 'read') {
+                        updatePageNumber();
+                    }
+                });
+
+                pageFlip.on('update', (e) => {
+                    updatePageNumber(e.data);
+                });
+
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        pageFlip.flipPrev();
+                    } else if (e.key === 'ArrowRight') {
+                        pageFlip.flipNext();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

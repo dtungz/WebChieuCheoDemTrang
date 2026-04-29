@@ -13,10 +13,12 @@ const TABS = [
 export default function RulesSection({ drumImage }) {
   const [activeTab, setActiveTab] = useState('overview');
 
+  const [activeBook, setActiveBook] = useState('quantro');
+
   return (
     <section id="rules" className="relative py-24 md:py-32 px-4">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/10 to-background" />
-      
+
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -35,11 +37,10 @@ export default function RulesSection({ drumImage }) {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-3 font-montserrat text-xs tracking-wider rounded-sm border transition-all ${
-                activeTab === tab.id
-                  ? 'border-primary bg-primary/10 text-primary'
-                  : 'border-border text-muted-foreground hover:border-primary/40'
-              }`}
+              className={`flex items-center gap-2 px-5 py-3 font-montserrat text-xs tracking-wider rounded-sm border transition-all ${activeTab === tab.id
+                ? 'border-primary bg-primary/10 text-primary'
+                : 'border-border text-muted-foreground hover:border-primary/40'
+                }`}
             >
               <tab.icon size={14} />
               {tab.label}
@@ -87,6 +88,42 @@ export default function RulesSection({ drumImage }) {
               <p className="font-montserrat text-xs text-muted-foreground mt-1">Tải PDF đầy đủ →</p>
             </div>
           </a>
+        </div>
+
+        {/* Flipbook Iframe */}
+        <div className="mt-16 text-center">
+          <h3 className="font-playfair text-2xl text-primary mb-8">Sổ Tay Luật Chơi & Quản Trò</h3>
+
+          {/* Book Selector Buttons */}
+          <div className="flex justify-center gap-4 mb-8">
+            <button
+              onClick={() => setActiveBook('quantro')}
+              className={`px-6 py-2 rounded-full border font-montserrat text-xs tracking-wider transition-all ${activeBook === 'quantro'
+                ? 'bg-primary text-background border-primary'
+                : 'border-primary/50 text-primary hover:bg-primary/10'
+                }`}
+            >
+              Sổ Tay Quản Trò
+            </button>
+            <button
+              onClick={() => setActiveBook('luatchoi')}
+              className={`px-6 py-2 rounded-full border font-montserrat text-xs tracking-wider transition-all ${activeBook === 'luatchoi'
+                ? 'bg-primary text-background border-primary'
+                : 'border-primary/50 text-primary hover:bg-primary/10'
+                }`}
+            >
+              Sổ Tay Luật Chơi
+            </button>
+          </div>
+
+          <div className="w-full max-w-5xl mx-auto rounded-lg overflow-hidden border border-border/50 bg-card/20 backdrop-blur-sm" style={{ height: '500px' }}>
+            <iframe
+              src={`/flipbook-sotay.html?book=${activeBook}`}
+              className="w-full h-full border-none"
+              title="Interactive Flipbook"
+              key={activeBook} // Force re-render iframe when switching books
+            />
+          </div>
         </div>
       </div>
     </section>
