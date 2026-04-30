@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/landing/Navbar';
 import HeroSection from '../components/landing/HeroSection';
 import CharacterGrid from '../components/landing/CharacterGrid';
+import EventGrid from '../components/landing/EventGrid';
 import RulesSection from '../components/landing/RulesSection';
 import TheatreSection from '../components/landing/TheatreSection';
 import FlashcardSection from '../components/landing/FlashcardSection';
@@ -21,6 +22,7 @@ export default function Landing() {
       <Navbar />
       <HeroSection heroImage={IMAGES.hero} />
       <CharacterGrid maskImage={IMAGES.mask} />
+      <EventGrid maskImage={IMAGES.mask} />
       <RulesSection drumImage={IMAGES.drum} />
       <TheatreSection bgImage={IMAGES.theatre} />
       <FlashcardSection />
