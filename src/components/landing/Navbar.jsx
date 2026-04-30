@@ -27,9 +27,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="#hero" className="font-playfair text-primary font-bold text-lg md:text-xl tracking-wider">
+          <a href="#hero" className="font-playfair text-primary font-bold text-base md:text-xl tracking-wider leading-tight">
             CHIẾU CHÈO<br className="md:hidden" />
-            <span className="text-foreground text-sm md:text-base"> ĐÊM TRĂNG</span>
+            <span className="text-foreground text-[10px] md:text-base"> ĐÊM TRĂNG</span>
           </a>
 
           {/* Desktop Nav */}
