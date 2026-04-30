@@ -114,12 +114,10 @@ const CHAR_LORE = {
     desc: 'Tiên nữ sống ở chốn bồng lai, sơ ý làm gãy cành hoa mẫu đơn quý, được Từ Thức cứu chuộc rồi kết duyên. Đau đớn tiễn chồng về trần gian, sau đó sống cô độc giữa cõi tiên — biểu tượng tình yêu thủy chung và bi kịch.',
   },
   'Dân Làng': {
-    play: '___',
     faction: 'Phe Thiện',
     desc: 'Những con người lam lũ nhưng giàu tình nghĩa — linh hồn của gánh hát, người giữ cho làng chèo không rơi vào hỗn loạn. Phải tỉnh táo phân biệt đâu là người cùng phường hát, đâu là kẻ che giấu âm mưu.',
   },
   'Kẻ Phá Rối': {
-    play: '___',
     faction: 'Phe Phá Rối',
     desc: 'Không phải quỷ, cũng chẳng phải người. Sống bằng sự mập mờ, gieo lời đồn, bóp méo câu hát. Giả vờ say mê nghệ thuật nhưng thực chất muốn sân đình rối ren, đêm đêm bắt cóc dân làng vào ngục.',
   },
@@ -262,13 +260,13 @@ export default function CharacterCard({ character, index }) {
 
           <div className="absolute inset-0 flex flex-col items-center justify-start pt-6 px-4 gap-1.5" style={{ zIndex: 3 }}>
             {/* Character name */}
-            <h3 className="font-playfair font-bold text-center leading-tight text-[#F5DEB3]" style={{ fontSize: 'clamp(11px, 2.8vw, 16px)', textShadow: '0 0 10px rgba(212,175,55,0.2)' }}>
+            <h3 className="font-playfair font-bold text-center leading-tight text-[#F5DEB3]" style={{ fontSize: 'clamp(13px, 3.2vw, 18px)', textShadow: '0 0 10px rgba(212,175,55,0.2)' }}>
               {character.name}
             </h3>
 
             {/* Play */}
             {lore?.play && (
-              <p className="font-montserrat uppercase tracking-[0.15em] text-center text-[#D4AF37]/80" style={{ fontSize: 'clamp(6px, 1.5vw, 9px)' }}>
+              <p className="font-montserrat uppercase tracking-[0.15em] text-center text-[#D4AF37]/80" style={{ fontSize: 'clamp(8px, 1.8vw, 11px)' }}>
                 VỞ CHÈO: {lore.play}
               </p>
             )}
@@ -283,7 +281,7 @@ export default function CharacterCard({ character, index }) {
             {lore?.faction && (
               <div
                 className="mt-1 px-3 py-0.5 rounded-sm font-montserrat uppercase tracking-[0.2em] bg-[#D4AF37]/5 border border-[#D4AF37]/40"
-                style={{ fontSize: 'clamp(5px, 1.2vw, 7.5px)', color: '#D4AF37' }}
+                style={{ fontSize: 'clamp(7px, 1.4vw, 9px)', color: '#D4AF37' }}
               >
                 {lore.faction}
               </div>
@@ -294,7 +292,7 @@ export default function CharacterCard({ character, index }) {
               <p
                 className="mt-2 font-montserrat text-center leading-relaxed text-[#F5DEB3]/80"
                 style={{
-                  fontSize: 'clamp(6px, 1.4vw, 8.5px)',
+                  fontSize: 'clamp(9px, 1.6vw, 11.5px)',
                   padding: '0 2px',
                 }}
               >

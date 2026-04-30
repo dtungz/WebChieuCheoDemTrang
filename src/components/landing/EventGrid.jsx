@@ -48,7 +48,7 @@ export default function EventGrid({ maskImage }) {
         </motion.div>
 
         {/* Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 md:gap-4">
+        <div className="grid grid-cols-5 gap-2 md:gap-4">
           {EVENTS.map((event, i) => (
             <EventCard key={event.name} event={event} index={i} />
           ))}

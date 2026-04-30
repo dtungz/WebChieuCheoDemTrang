@@ -65,11 +65,10 @@ export default function CharacterGrid({ maskImage }) {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2 font-montserrat text-xs tracking-wider rounded-sm border transition-all ${
-                filter === f
+              className={`px-4 py-2 font-montserrat text-xs tracking-wider rounded-sm border transition-all ${filter === f
                   ? 'border-primary bg-primary/10 text-primary'
                   : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
-              }`}
+                }`}
             >
               {f}
             </button>
