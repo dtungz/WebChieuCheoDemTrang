@@ -39,11 +39,11 @@ export default function EventGrid({ maskImage }) {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <p className="font-montserrat text-xs tracking-[0.4em] text-primary/70 uppercase mb-4">The Twists of Fate</p>
+          <p className="font-montserrat text-xs tracking-[0.4em] text-primary/70 uppercase mb-4">Special Events</p>
           <h2 className="font-playfair text-4xl md:text-6xl font-bold text-foreground mb-4">Thẻ Sự Kiện</h2>
           <SectionDivider />
           <p className="font-montserrat text-sm text-muted-foreground mt-6 max-w-xl mx-auto">
-            Những biến số bất ngờ thay đổi cục diện cuộc chơi. Nhấn vào lá bài để lật mặt sau.
+            18 thẻ sự kiện đặc biệt - những biến cố bất ngờ xuất hiện trong mỗi vòng chơi. Thẻ được bốc ngẫu nhiên sau mỗi lần trời sáng.
           </p>
         </motion.div>
 

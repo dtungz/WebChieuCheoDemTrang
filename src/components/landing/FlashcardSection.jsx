@@ -163,7 +163,7 @@ export default function FlashcardSection() {
             Nhấn vào thẻ để lật. Hai bộ thẻ giúp bạn khám phá lời thoại và làn điệu chèo cổ.
           </p>
           <a
-            href="https://media.base44.com/files/public/user_69e39422b6ba73e7f55d8606/af5608ed5_6FLASHCARDCACCAUTHOAICHEO84x36cm.pdf"
+            href="/docs/Flashcards.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block mt-4 font-montserrat text-xs text-primary/70 hover:text-primary underline"

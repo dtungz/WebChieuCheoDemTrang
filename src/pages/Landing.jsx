@@ -10,10 +10,10 @@ import EpilogueSection from '../components/landing/EpilogueSection';
 import Footer from '../components/landing/Footer';
 
 const IMAGES = {
-  hero: 'https://media.base44.com/images/public/69e8edc94c04138d00325c50/370038dfc_generated_0d67c35f.png',
-  mask: 'https://media.base44.com/images/public/69e8edc94c04138d00325c50/9cfe74c1b_generated_07fda2cc.png',
-  drum: 'https://media.base44.com/images/public/69e8edc94c04138d00325c50/a74ecb8e5_generated_2f1310fe.png',
-  theatre: 'https://media.base44.com/images/public/69e8edc94c04138d00325c50/9197d3bb9_generated_8bfd7161.png',
+  hero: '/landing/hero.png',
+  mask: '/landing/mask.png',
+  drum: '/landing/drum.png',
+  theatre: '/landing/theatre.png',
 };
 
 export default function Landing() {

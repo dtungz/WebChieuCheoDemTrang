@@ -65,7 +65,7 @@ export default function RulesSection({ drumImage }) {
         {/* PDF Links */}
         <div className="grid md:grid-cols-2 gap-6 mt-12">
           <a
-            href="https://media.base44.com/files/public/user_69e39422b6ba73e7f55d8606/d42e9dc8c_4DANSOTAYLUATCHOI1.pdf"
+            href="/docs/LuatChoi.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-4 p-6 bg-card/40 border border-border rounded-lg hover:border-primary/50 transition-all"
@@ -77,7 +77,7 @@ export default function RulesSection({ drumImage }) {
             </div>
           </a>
           <a
-            href="https://media.base44.com/files/public/user_69e39422b6ba73e7f55d8606/deec0a94f_3DANSOTAYQUANTRO.pdf"
+            href="/docs/QuanTro.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-4 p-6 bg-card/40 border border-border rounded-lg hover:border-primary/50 transition-all"
