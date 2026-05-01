@@ -13,8 +13,14 @@ export default function Footer() {
             Một dự án xây dựng mô hình boardgame kết hợp nghệ thuật chèo truyền thống đến từ nhóm sinh viên thuộc khoa Ngữ văn <br /> - Trường Đại học Sư phạm Hà Nội.
           </p>
           <div className="font-montserrat text-[10px] text-muted-foreground/70 flex flex-col items-center gap-1 uppercase tracking-wider">
-            <p>Trưởng dự án: <span className="text-primary/80 font-semibold">Phạm Quế Anh</span></p>
-            <p>GVHD: <span className="text-primary/80 font-semibold">Nguyễn Thị Diệu Khanh</span></p>
+            <p>Thực hiện dự án: <span className="text-primary/80 font-semibold">Phạm Quế Anh, Hoàng Ngọc Ánh, Lê Như Bình</span></p>
+            <div className="flex flex-col items-center mt-1">
+              <p>Giảng viên hướng dẫn:</p>
+              <div className="text-primary/80 font-semibold normal-case flex flex-col items-center">
+                <span>PGS. TS. Nguyễn Việt Hùng</span>
+                <span>ThS. Nguyễn Thị Diệu Khanh</span>
+              </div>
+            </div>
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-border/50 flex items-center justify-center gap-6 text-muted-foreground/60">

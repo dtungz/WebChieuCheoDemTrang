@@ -3,6 +3,10 @@ import { motion } from 'framer-motion';
 
 // Character lore data extracted from the character handbook PDF
 const CHAR_LORE = {
+  'Tên Hề': {
+    faction: 'Quản trò',
+    desc: 'Trong chèo, nhân vật hề chèo là kiểu nhân vật thông minh, láu lỉnh, giàu tinh thần phản kháng. Ẩn sau vẻ ngoài hài hước là một tâm thế sắc sảo, dám châm biếm và vạch trần thói tham lam, giả dối của tầng lớp thống trị.',
+  },
   'Quan Âm Thị Kính': {
     play: 'Quan Âm Thị Kính',
     faction: 'Phe Thiện',
@@ -122,7 +126,6 @@ const CHAR_LORE = {
     desc: 'Không phải quỷ, cũng chẳng phải người. Sống bằng sự mập mờ, gieo lời đồn, bóp méo câu hát. Giả vờ say mê nghệ thuật nhưng thực chất muốn sân đình rối ren, đêm đêm bắt cóc dân làng vào ngục.',
   },
 };
-
 // Map each character to their card order.
 
 const CHAR_PAGE = {
@@ -294,6 +297,10 @@ export default function CharacterCard({ character, index }) {
                 style={{
                   fontSize: 'clamp(9px, 1.6vw, 11.5px)',
                   padding: '0 2px',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 4,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'
                 }}
               >
                 {lore.desc}
