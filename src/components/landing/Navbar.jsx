@@ -5,7 +5,7 @@ const NAV_ITEMS = [
   { label: 'GIỚI THIỆU', href: '#hero' },
   { label: 'NHÂN VẬT', href: '#characters' },
   { label: 'LUẬT CHƠI', href: '#rules' },
-  { label: 'NHÀ HÁT', href: '#theatre' },
+  { label: 'CÁC VỞ CHÈO', href: '#theatre' },
   { label: 'FLASHCARDS', href: '#flashcards' },
 ];
 
@@ -21,8 +21,8 @@ export default function Navbar() {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-        ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-black/50'
-        : 'bg-transparent'
+      ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-lg shadow-black/50'
+      : 'bg-transparent'
       }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
