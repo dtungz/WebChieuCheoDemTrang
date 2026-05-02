@@ -26,16 +26,24 @@ const CHARACTERS = [
   { name: 'Dương Lễ', rank: 'C', faction: 'Phe Thiện', power: 5, deception: 3, virtue: 7 },
   { name: 'Trinh Nguyên', rank: 'C', faction: 'Phe Thiện', power: 3, deception: 2, virtue: 8 },
   { name: 'Dân Làng', rank: 'C', faction: 'Phe Thiện', power: 2, deception: 2, virtue: 6 },
-  { name: 'Xúy Vân', rank: 'D', faction: 'Trung Lập', power: 3, deception: 6, virtue: 4 },
-  { name: 'Tôn Mạnh', rank: 'D', faction: 'Phe Thiện', power: 3, deception: 2, virtue: 5 },
-  { name: 'Tôn Trọng', rank: 'D', faction: 'Phe Thiện', power: 3, deception: 2, virtue: 5 },
+  { name: 'Xúy Vân', rank: 'C', faction: 'Trung Lập', power: 3, deception: 6, virtue: 4 },
+  { name: 'Tôn Mạnh', rank: 'C', faction: 'Phe Thiện', power: 3, deception: 2, virtue: 5 },
+  { name: 'Tôn Trọng', rank: 'C', faction: 'Phe Thiện', power: 3, deception: 2, virtue: 5 },
 ];
 
-const FACTIONS = ['Tất cả', 'Phe Thiện', 'Phe Phá Rối', 'Trung Lập', 'Quản trò'];
+const FACTIONS = ['Tất cả', 'Quản trò', 'Phe Phá Rối', 'Phe Thiện', 'Trung Lập'];
 
 export default function CharacterGrid({ maskImage }) {
   const [filter, setFilter] = useState('Tất cả');
-  const filtered = filter === 'Tất cả' ? CHARACTERS : CHARACTERS.filter(c => c.faction === filter);
+  const filtered = (filter === 'Tất cả' ? CHARACTERS : CHARACTERS.filter(c => c.faction === filter))
+    .sort((a, b) => {
+      const rankOrder = { 'S': 0, 'A': 1, 'B': 2, 'C': 3, 'D': 4 };
+      if (rankOrder[a.rank] !== rankOrder[b.rank]) {
+        return rankOrder[a.rank] - rankOrder[b.rank];
+      }
+      const factionOrder = { 'Quản trò': 0, 'Phe Phá Rối': 1, 'Phe Thiện': 2, 'Trung Lập': 3 };
+      return (factionOrder[a.faction] ?? 99) - (factionOrder[b.faction] ?? 99);
+    });
 
   return (
     <section id="characters" className="relative py-24 md:py-32 px-4 overflow-hidden">
@@ -66,8 +74,8 @@ export default function CharacterGrid({ maskImage }) {
               key={f}
               onClick={() => setFilter(f)}
               className={`px-4 py-2 font-montserrat text-xs tracking-wider rounded-sm border transition-all ${filter === f
-                  ? 'border-primary bg-primary/10 text-primary'
-                  : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
+                ? 'border-primary bg-primary/10 text-primary'
+                : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground'
                 }`}
             >
               {f}
