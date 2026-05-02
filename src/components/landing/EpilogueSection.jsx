@@ -29,7 +29,7 @@ export default function EpilogueSection({ drumImage }) {
             <p className="font-montserrat text-sm text-foreground/60 mt-6 leading-relaxed max-w-2xl mx-auto">
               Thông qua việc trải nghiệm số phận của những nhân vật như Thị Kính, Trương Viên hay Lưu Bình,...
               chúng tôi tin rằng nghệ thuật chèo đã trở thành những cảm xúc sống động, gần gũi trong tâm trí mỗi người chơi.
-              Trò chơi có thể kết thúc, nhưng những bài học về lòng nhân nghĩa, sự trung trinh và niềm tin
+              Trò chơi có thể kết thúc, nhưng những bài học đạo lý, và niềm tin
               <em className="text-primary"> "ở hiền gặp lành"</em>, <em className="text-primary">“cái thiện sẽ chiến thắng cái ác” </em> vẫn
               còn mãi như một dòng chảy văn hóa âm thầm nuôi dưỡng tâm hồn con người.
             </p>
