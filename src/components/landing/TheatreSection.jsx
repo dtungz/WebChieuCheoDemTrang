@@ -4,13 +4,13 @@ import { Play } from 'lucide-react';
 import SectionDivider from './SectionDivider';
 
 const PLAYS = [
-  { name: 'Quan Âm Thị Kính', desc: 'Bi kịch của Thị Kính — oan khuất chồng chất, lòng nhân từ bất diệt', videoQuery: 'https://www.youtube.com/watch?v=ZxVY5duWmbg' },
-  { name: 'Trương Viên', desc: 'Chuyện tình bi tráng giữa chiến tranh, lòng trung trinh của Thị Phương', videoQuery: 'https://www.youtube.com/watch?v=msJjQQILUFU' },
-  { name: 'Kim Nham', desc: 'Bi kịch Xúy Vân giả dại — khi tình yêu bị phản bội, đẩy con người vào bước đường cùng', videoQuery: 'https://www.youtube.com/watch?v=urH2Utyheqo' },
-  { name: 'Chu Mãi Thần', desc: 'Câu chuyện về lòng kiên trì và sự bạc bẽo của thế thái nhân tình', videoQuery: 'https://www.youtube.com/watch?v=Kn22EDG7iWY' },
-  { name: 'Lưu Bình Dương Lễ', desc: 'Tình bạn tri kỷ vượt qua gian khổ, hy sinh thầm lặng của Châu Long', videoQuery: 'https://www.youtube.com/watch?v=ohOz5PDTW7I' },
-  { name: 'Từ Thức Gặp Tiên', desc: 'Chốn bồng lai tiên cảnh — khi con người chạm đến giấc mơ ngàn đời', videoQuery: 'https://www.youtube.com/watch?v=IiNc-222rDQ' },
-  { name: 'Trinh Nguyên', desc: 'Tấm lòng cao thượng của người mẹ dành cho các con', videoQuery: 'https://www.youtube.com/watch?v=owZZ8_P2oaY' },
+  { name: 'Quan Âm Thị Kính', desc: 'Bi kịch của Thị Kính — oan khuất chồng chất, lòng nhân từ bất diệt.', videoQuery: 'https://www.youtube.com/watch?v=ZxVY5duWmbg', thumbnail: '/Thumbnail/QuanAmThiKinh.JPG' },
+  { name: 'Trương Viên', desc: 'Chuyện tình bi tráng giữa chiến tranh, lòng trung trinh của Thị Phương.', videoQuery: 'https://www.youtube.com/watch?v=msJjQQILUFU', thumbnail: '/Thumbnail/TruongVien.JPG' },
+  { name: 'Kim Nham', desc: 'Bi kịch gia đình và thân phận người phụ nữ trong xã hội phong kiến.', videoQuery: 'https://www.youtube.com/watch?v=urH2Utyheqo', thumbnail: '/Thumbnail/KimNham.JPG' },
+  { name: 'Chu Mãi Thần', desc: 'Bài học về sự thuỷ chung, tình nghĩa giữa nhân tình thế thái.', videoQuery: 'https://www.youtube.com/watch?v=Kn22EDG7iWY', thumbnail: '/Thumbnail/ChuMaiThan.JPG' },
+  { name: 'Lưu Bình Dương Lễ', desc: 'Tình bạn tri kỷ vượt qua gian khổ,sự hy sinh thầm lặng của Châu Long.', videoQuery: 'https://www.youtube.com/watch?v=ohOz5PDTW7I', thumbnail: '/Thumbnail/LuuBinhDuongLe.JPG' },
+  { name: 'Từ Thức Gặp Tiên', desc: 'Tình yêu vượt cõi trần - tiên giữa chàng nho sĩ Từ Thức và nàng tiên Giáng Hương.', videoQuery: 'https://www.youtube.com/watch?v=IiNc-222rDQ', thumbnail: '/Thumbnail/TuThucGapTien.JPG' },
+  { name: 'Trinh Nguyên', desc: 'Tấm lòng cao thượng của người mẹ dành cho các con.', videoQuery: 'https://www.youtube.com/watch?v=owZZ8_P2oaY', thumbnail: '/Thumbnail/TrinhNguyen.JPG' },
 ];
 
 export default function TheatreSection({ bgImage }) {
@@ -50,12 +50,16 @@ export default function TheatreSection({ bgImage }) {
               transition={{ delay: i * 0.1 }}
               className="group relative bg-card/50 border border-border rounded-lg overflow-hidden hover:border-primary/50 transition-all"
             >
-              <div className="aspect-video bg-gradient-to-br from-secondary/60 via-card to-muted/30 flex items-center justify-center relative">
-                <div className="absolute inset-0 bg-secondary/20 group-hover:bg-secondary/40 transition-colors" />
-                <div className="relative z-10 w-14 h-14 rounded-full border-2 border-primary/50 flex items-center justify-center group-hover:border-primary group-hover:scale-110 transition-all">
+              <div className="aspect-video relative overflow-hidden flex items-center justify-center">
+                <img
+                  src={play.thumbnail}
+                  alt={play.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+                <div className="relative z-10 w-14 h-14 rounded-full border-2 border-primary/50 flex items-center justify-center group-hover:border-primary group-hover:scale-110 transition-all bg-background/20 backdrop-blur-sm">
                   <Play className="w-6 h-6 text-primary ml-1" />
                 </div>
-                <span className="absolute bottom-3 left-4 font-playfair text-xs text-primary/60">Vở chèo cổ</span>
               </div>
               <div className="p-5">
                 <h3 className="font-playfair text-lg text-foreground group-hover:text-primary transition-colors">{play.name}</h3>
