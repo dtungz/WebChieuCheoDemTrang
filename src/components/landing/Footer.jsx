@@ -26,13 +26,13 @@ export default function Footer() {
         <div className="mt-8 pt-8 border-t border-border/50 flex items-center justify-center gap-6 text-muted-foreground/60">
           <div className="flex items-center gap-2">
             <Phone size={14} className="text-primary/60" />
-            <span className="font-montserrat text-[11px] tracking-wider">0382891265</span>
+            <span className="font-montserrat text-[11px] tracking-wider">0925528668</span>
           </div>
           <div className="w-px h-3 bg-border/50" />
           <div className="flex items-center gap-2">
             <Mail size={14} className="text-primary/60" />
-            <a href="mailto:torintoujs@gmail.com" className="font-montserrat text-[11px] tracking-wider hover:text-primary transition-colors">
-              torintoujs@gmail.com
+            <a href="mailto:queanhpham.pqa@gmail.com" className="font-montserrat text-[11px] tracking-wider hover:text-primary transition-colors">
+              queanhpham.pqa@gmail.com
             </a>
           </div>
         </div>
